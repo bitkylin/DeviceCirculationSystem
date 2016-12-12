@@ -1,37 +1,38 @@
 ﻿using System;
 using System.Data;
+using System.Diagnostics;
 using DeviceCirculationSystem.bean;
 using DeviceCirculationSystem.bean.@enum;
 
 namespace DeviceCirculationSystem.Util
 {
-    class RepositoryPresenter
+    internal class RepositoryPresenter
     {
         /// <summary>
-        /// 查询库存情况表
+        ///     查询库存情况表
         /// </summary>
-        /// <param name="facility">包含用户名，设备名</param>
+        /// <param name="facility">包含用户名，设备类别</param>
         /// <returns></returns>
         public static DataTable QueryStorageLimitUser(Facility facility)
         {
-            if (facility.OwnUser == "")
-                return BitkyMySql.QueryStorageUnlimitUser(facility.Name, BitkyMySql.TableStatusRepertory);
-            else
-                return BitkyMySql.QueryStorageLimitUser(facility.Name, facility.OwnUser,
-                    BitkyMySql.TableStatusRepertory);
+            Debug.WriteLine("facility.Category:"+ facility.Category+ ";facility.OwnUser:" + facility.OwnUser);
+            return BitkyMySql.QueryStorageLimitUser(facility.Category, facility.OwnUser, KySet.TableStatusRepertory);
         }
 
         /// <summary>
-        /// 查询借出或归还情况表
+        ///     查询借出或归还情况表
         /// </summary>
-        /// <param name="facility">包含用户名，设备名</param>
+        /// <param name="facility">包含用户名，设备类别</param>
         /// <returns></returns>
         public DataTable QueryDeviceInputOutputLog(Facility facility)
         {
-            if (facility.Status == DeviceStatus.Output)
-                return BitkyMySql.QueryStorageLimitUser(facility.Name, facility.OwnUser, BitkyMySql.TableLogOutput);
-            if (facility.Status == DeviceStatus.Input)
-                return BitkyMySql.QueryStorageLimitUser(facility.Name, facility.OwnUser, BitkyMySql.TableLogInput);
+            switch (facility.Status)
+            {
+                case DeviceStatus.Loan:
+                    return BitkyMySql.QueryStorageLimitUser(facility.Category, facility.OwnUser, KySet.TableLogLoan);
+                case DeviceStatus.Return:
+                    return BitkyMySql.QueryStorageLimitUser(facility.Category, facility.OwnUser, KySet.TableLogReturn);
+            }
             throw new Exception("查询借出或归还情况表异常，设置有误");
         }
     }

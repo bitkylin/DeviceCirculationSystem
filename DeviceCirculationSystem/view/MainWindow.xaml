@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="实验室设备自助借还系统" Height="540" Width="960" MinWidth="960" MinHeight="540" Closed="Window_Closed"
+        Title="实验室设备自助借还系统" Height="576" Width="1024" MinWidth="1024" MinHeight="576" Closed="Window_Closed"
         WindowStartupLocation="CenterScreen">
     <Window.ContextMenu>
         <ContextMenu Name="ChangePassword">
@@ -28,42 +28,55 @@
             <TabItem Header="库存查询" Height="25" Width="150" Background="#7F62CFFF">
                 <Grid Background="#7FFFFFFF">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="347*" />
-                        <ColumnDefinition Width="210*" />
-                        <ColumnDefinition Width="372*" />
+                        <ColumnDefinition Width="252*" />
+                        <ColumnDefinition Width="175*"/>
+                        <ColumnDefinition Width="153*"/>
+                        <ColumnDefinition Width="413*"/>
                     </Grid.ColumnDefinitions>
-                    <GroupBox x:Name="GroupBox" Header="设备拥有者" VerticalAlignment="Top" Height="55"
-                              HorizontalAlignment="Left" Width="288" Margin="10,0,0,0" />
-                    <RadioButton x:Name="RadioButtonQueryAll" Content="所有设备" HorizontalAlignment="Left"
-                                 Margin="37,22,0,0" VerticalAlignment="Top" Height="14" Width="80"
+                    <GroupBox x:Name="GroupBoxCopy_Copy" Header="出库入库" VerticalAlignment="Top" Height="55"
+                        Margin="0,0,9.8,0" MaxWidth="400" Grid.Column="3" HorizontalAlignment="Right" Width="141" />
+                    <GroupBox x:Name="GroupBox" Header="设备操作者" VerticalAlignment="Top" Height="55"
+                              HorizontalAlignment="Left" Width="232" Margin="10,0,0,0" />
+                    <RadioButton x:Name="RadioButtonQueryAll" Content="指定用户" HorizontalAlignment="Left"
+                                 Margin="17,24,0,0" VerticalAlignment="Top" Height="14" Width="75"
                                  Checked="radioButtonQuery_Checked" />
                     <RadioButton x:Name="RadioButtonQueryLab" Content="实验室" HorizontalAlignment="Left"
-                                 Margin="207,22,0,0" VerticalAlignment="Top" Height="14" Width="80"
+                                 Margin="177,24,0,0" VerticalAlignment="Top" Height="14" Width="65"
                                  Checked="radioButtonQuery_Checked" />
                     <RadioButton x:Name="RadioButtonQueryOwn" Content="当前用户" HorizontalAlignment="Left"
-                                 Margin="122,22,0,0" VerticalAlignment="Top" Height="14" Width="80"
+                                 Margin="97,24,0,0" VerticalAlignment="Top" Height="14" Width="75"
                                  Checked="radioButtonQuery_Checked" />
-                    <Label x:Name="Label" Content="设备名称:" Margin="0,15,189.8,0" VerticalAlignment="Top" MaxWidth="70"
-                           HorizontalAlignment="Right" Width="64" Height="30" HorizontalContentAlignment="Center"
-                           VerticalContentAlignment="Center" Grid.ColumnSpan="2" />
-                    <ComboBox x:Name="ComboBoxQueryDevice" Margin="24.8,16,96.8,0" VerticalAlignment="Top" Height="30"
-                              IsEditable="True" MaxWidth="200" Grid.Column="1" VerticalContentAlignment="Center"
-                              TabIndex="0" />
+                    <Label x:Name="Label" Content="类别:" Margin="13.8,15,0,0" VerticalAlignment="Top" MaxWidth="70"
+                           HorizontalAlignment="Left" Width="40" Height="30" HorizontalContentAlignment="Center"
+                           VerticalContentAlignment="Center" Grid.Column="2" />
+                    <ComboBox x:Name="ComboBoxQueryDevice" Margin="58.8,16,5,0" VerticalAlignment="Top" Height="30"
+                              IsEditable="True" MaxWidth="200" VerticalContentAlignment="Center"
+                              TabIndex="0" Grid.Column="2" />
                     <GroupBox x:Name="GroupBoxCopy" Header="设备流转" VerticalAlignment="Top" Height="55"
-                              Margin="0,0,9.8,0" Grid.Column="2" MaxWidth="400" HorizontalAlignment="Right" Width="347" />
-                    <Button x:Name="BtnOutputStorage" Content="设备借出" Margin="0,16,186.8,0" VerticalAlignment="Top"
-                            Height="30" Background="#BFB7CAFF" Grid.Column="2" HorizontalAlignment="Right" Width="100"
-                            Click="BtnOutputStorage_Click" TabIndex="2" />
-                    <Button x:Name="BtnInputStorage" Content="设备归还" Margin="0,16,51.8,0" VerticalAlignment="Top"
-                            Height="30" Background="#BFB7CAFF" Grid.Column="2" HorizontalAlignment="Right" Width="100"
-                            Click="BtnInputStorage_Click" TabIndex="3" />
-                    <Button x:Name="BtnQuery" Content="查询" Margin="0,16,5.8,0" VerticalAlignment="Top" Height="30"
-                            Background="#BFB7CAFF" Grid.Column="1" HorizontalAlignment="Right" Width="80"
-                            Click="BtnQuery_Click" TabIndex="1" />
-                    <DataGrid x:Name="DataGridViewQuery" Margin="10,55,9.8,10.4" Grid.ColumnSpan="3"
+                              Margin="0,0,156.8,0" MaxWidth="400" Grid.Column="3" HorizontalAlignment="Right" Width="136" />
+                    <Button x:Name="BtnLoanFromStorage" Content="借出" Margin="0,16,231.8,0" VerticalAlignment="Top"
+                            Height="30" Background="#BFB7CAFF"
+                            Click="BtnLoanFromStorage_Click" TabIndex="2" Grid.Column="3" HorizontalAlignment="Right" Width="50" />
+                    <Button x:Name="BtnReturnToStorage" Content="归还" Margin="0,16,166.8,0" VerticalAlignment="Top"
+                            Height="30" Background="#BFB7CAFF"
+                            Click="BtnReturnToStorage_Click" TabIndex="3" Grid.Column="3" HorizontalAlignment="Right" Width="50" />
+                    <Button x:Name="BtnQuery" Content="查询" Margin="5,16,0,0" VerticalAlignment="Top" Height="30"
+                            Background="#BFB7CAFF"
+                            Click="BtnQuery_Click" TabIndex="1" HorizontalAlignment="Left" Width="60" Grid.Column="3" />
+                    <DataGrid x:Name="DataGridViewQuery" Margin="10,60,9.8,10.2"
                               Background="#00000000" BorderBrush="#00000000" AlternatingRowBackground="#00000000"
                               RowBackground="#00000000" HorizontalGridLinesBrush="#7F767676"
-                              VerticalGridLinesBrush="#7F767676" />
+                              VerticalGridLinesBrush="#7F767676" Grid.ColumnSpan="4" />
+                    <Button x:Name="BtnInputStorage" Content="入库" Margin="0,16,75.8,0" VerticalAlignment="Top"
+                        Height="30" Background="#BFB7CAFF" HorizontalAlignment="Right" Width="50" TabIndex="3" Grid.Column="3" Click="BtnInputStorage_Click" />
+                    <Label x:Name="Label_Copy" Content="用户:" Margin="7.8,15,0,0" VerticalAlignment="Top" MaxWidth="70"
+                        HorizontalAlignment="Left" Width="45" Height="30" HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center" Grid.Column="1" />
+                    <ComboBox x:Name="ComboBoxQueryDevice_Copy" Margin="57.8,15,18.2,0" VerticalAlignment="Top" Height="30"
+                        IsEditable="True" MaxWidth="200" VerticalContentAlignment="Center"
+                        TabIndex="0" Grid.Column="1" />
+                    <Button x:Name="BtnOutputStorage" Content="出库" Margin="0,16,20.8,0" VerticalAlignment="Top"
+                        Height="30" Background="#BFB7CAFF" HorizontalAlignment="Right" Width="50" TabIndex="3" Grid.Column="3" Click="BtnOutputStorage_Click" />
                 </Grid>
             </TabItem>
             <TabItem Header="历史查询" Height="25" Width="150" Background="#7F62CFFF">
@@ -90,7 +103,7 @@
                     <Button x:Name="BtnQueryLog" Content="查询" Margin="10,17,0,0" VerticalAlignment="Top" Height="30"
                             Background="#BFB7CAFF" HorizontalAlignment="Left" Width="100" Grid.Column="2"
                             Click="btnQueryLog_Click" />
-                    <DataGrid x:Name="DataGridViewLog" Margin="10,55,9.8,0.4" BorderBrush="#00000000"
+                    <DataGrid x:Name="DataGridViewLog" Margin="10,60,9.8,0.4" BorderBrush="#00000000"
                               Grid.ColumnSpan="3" Background="#00000000" RowBackground="#00000000"
                               AlternatingRowBackground="#00000000" HorizontalGridLinesBrush="#7F767676"
                               VerticalGridLinesBrush="#7F767676" />

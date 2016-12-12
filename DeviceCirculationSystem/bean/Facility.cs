@@ -41,12 +41,12 @@ namespace DeviceCirculationSystem.bean
         public int Num { set; get; }
 
         /// <summary>
-        ///     当前拥有者
+        ///     当前操作者
         /// </summary>
         public string OwnUser { set; get; }
 
         /// <summary>
-        ///     目标(未来)拥有者
+        ///     目标(未来)操作者
         /// </summary>
         public string ToUser { set; get; }
 

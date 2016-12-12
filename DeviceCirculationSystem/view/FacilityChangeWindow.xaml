@@ -18,39 +18,39 @@
                VerticalAlignment="Top" RenderTransformOrigin="-0.495,-0.016" FontSize="20" />
         <Label x:Name="LabelCopy1" Content="编号: " HorizontalAlignment="Left" Margin="25,95,0,0"
                VerticalAlignment="Top" RenderTransformOrigin="-0.495,-0.016" FontSize="16" />
-        <Label x:Name="LabelCopy2" Content="名称: " HorizontalAlignment="Left" Margin="25,145,0,0"
+        <Label x:Name="LabelCopy2" Content="名称: " HorizontalAlignment="Left" Margin="25,150,0,0"
                VerticalAlignment="Top" RenderTransformOrigin="-0.495,-0.016" FontSize="16" />
-        <Label x:Name="LabelCopy3" Content="单价: " HorizontalAlignment="Left" Margin="25,195,0,0"
+        <Label x:Name="LabelCopy3" Content="单价: " HorizontalAlignment="Left" Margin="25,200,0,0"
                VerticalAlignment="Top" RenderTransformOrigin="-0.495,-0.016" FontSize="16" />
         <Label x:Name="LabelCopy4" Content="转入至: " HorizontalAlignment="Left" Margin="25,250,0,0"
                VerticalAlignment="Top" RenderTransformOrigin="-0.495,-0.016" FontSize="16" />
-        <Label x:Name="LabelCopy5" Content="型号: " HorizontalAlignment="Left" Margin="250,95,0,0"
+        <Label x:Name="LabelCopy5" Content="型号: " HorizontalAlignment="Left" Margin="250,150,0,0"
                VerticalAlignment="Top" RenderTransformOrigin="-0.495,-0.016" FontSize="16" />
-        <Label x:Name="LabelCopy6" Content="规格: " HorizontalAlignment="Left" Margin="250,145,0,0"
+        <Label x:Name="LabelCopy6" Content="规格: " HorizontalAlignment="Left" Margin="250,200,0,0"
                VerticalAlignment="Top" RenderTransformOrigin="-0.495,-0.016" FontSize="16" />
-        <Label x:Name="LabelCopy7" Content="数量: " HorizontalAlignment="Left" Margin="250,195,0,0"
+        <Label x:Name="LabelCopy7" Content="数量: " HorizontalAlignment="Left" Margin="250,250,0,0"
                VerticalAlignment="Top" RenderTransformOrigin="-0.495,-0.016" FontSize="16" />
         <Label x:Name="LabelCopy8" Content="日期: " HorizontalAlignment="Left" Margin="25,375,0,0"
                VerticalAlignment="Top" RenderTransformOrigin="-0.495,-0.016" FontSize="16" />
-        <TextBox x:Name="TextBoxId" HorizontalAlignment="Left" Height="30" Margin="92,95,0,0" TextWrapping="Wrap"
+        <TextBox x:Name="TextBoxId" HorizontalAlignment="Left" Height="30" Margin="92,96,0,0" TextWrapping="Wrap"
                  VerticalAlignment="Top" Width="120" VerticalContentAlignment="Center" Background="#7FFFFFFF"
                  MaxLines="1" TabIndex="0" />
-        <TextBox x:Name="TextBoxName" HorizontalAlignment="Left" Height="30" Margin="92,145,0,0" TextWrapping="Wrap"
+        <TextBox x:Name="TextBoxName" HorizontalAlignment="Left" Height="30" Margin="92,150,0,0" TextWrapping="Wrap"
                  VerticalAlignment="Top" Width="120" VerticalContentAlignment="Center" Background="#7FFFFFFF"
                  MaxLines="1" TabIndex="1" />
-        <TextBox x:Name="TextBoxPrice" HorizontalAlignment="Left" Height="30" Margin="92,195,0,0" TextWrapping="Wrap"
+        <TextBox x:Name="TextBoxPrice" HorizontalAlignment="Left" Height="30" Margin="92,200,0,0" TextWrapping="Wrap"
                  VerticalAlignment="Top" Width="120" VerticalContentAlignment="Center" Background="#7FFFFFFF"
                  MaxLines="1" TabIndex="2" />
         <TextBox x:Name="TextBoxUser" HorizontalAlignment="Left" Height="30" Margin="92,250,0,0" TextWrapping="Wrap"
                  VerticalAlignment="Top" Width="120" VerticalContentAlignment="Center" Background="#7FFFFFFF"
                  MaxLines="1" TabIndex="1" />
-        <TextBox x:Name="TextBoxModelNum" HorizontalAlignment="Left" Height="30" Margin="306,95,0,0" TextWrapping="Wrap"
+        <TextBox x:Name="TextBoxModelNum" HorizontalAlignment="Left" Height="30" Margin="306,150,0,0" TextWrapping="Wrap"
                  VerticalAlignment="Top" Width="120" VerticalContentAlignment="Center" Background="#7FFFFFFF"
                  MaxLines="1" TabIndex="4" />
-        <TextBox x:Name="TextBoxParameter" HorizontalAlignment="Left" Height="30" Margin="306,145,0,0"
+        <TextBox x:Name="TextBoxParameter" HorizontalAlignment="Left" Height="30" Margin="306,200,0,0"
                  TextWrapping="Wrap" VerticalAlignment="Top" Width="120" VerticalContentAlignment="Center"
                  Background="#7FFFFFFF" MaxLines="1" TabIndex="5" />
-        <TextBox x:Name="TextBoxNum" HorizontalAlignment="Left" Height="30" Margin="306,195,0,0" TextWrapping="Wrap"
+        <TextBox x:Name="TextBoxNum" HorizontalAlignment="Left" Height="30" Margin="306,250,0,0" TextWrapping="Wrap"
                  VerticalAlignment="Top" Width="120" VerticalContentAlignment="Center" Background="#7FFFFFFF"
                  MaxLines="1" TabIndex="6" MaxLength="3" />
         <TextBox x:Name="TextBoxDateTime" HorizontalAlignment="Left" Height="30" Margin="92,375,0,0"
@@ -67,6 +67,11 @@
         <Button x:Name="BtnCancel" Content="关闭" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120"
                 Margin="270,456,0,0" Height="34" FontSize="16" Background="#BFFF89C0"
                 IsCancel="True" Click="btnCancel_Click" TabIndex="10" />
+        <Label x:Name="LabelCopy5_Copy" Content="类别: " HorizontalAlignment="Left" Margin="250,96,0,0"
+            VerticalAlignment="Top" RenderTransformOrigin="-0.495,-0.016" FontSize="16" />
+        <TextBox x:Name="TextBoxCategory" HorizontalAlignment="Left" Height="30" Margin="306,96,0,0" TextWrapping="Wrap"
+            VerticalAlignment="Top" Width="120" VerticalContentAlignment="Center" Background="#7FFFFFFF"
+            MaxLines="1" TabIndex="4" />
 
     </Grid >
 </Window>
