@@ -1,0 +1,37 @@
+﻿<Window x:Class="DeviceCirculationSystem.view.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" Height="350" Width="585" MouseLeftButtonDown="Window_MouseLeftButtonDown" Topmost="True" WindowStartupLocation="CenterScreen" Title="实验室设备自助借还系统" AllowsTransparency="True" WindowStyle="None" BorderThickness="1" Foreground="Black">
+    <Window.BorderBrush>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="#FF2BFF00" Offset="0"/>
+            <GradientStop Color="#FF00F1FF" Offset="1"/>
+        </LinearGradientBrush>
+    </Window.BorderBrush>
+    <Window.Background>
+        <RadialGradientBrush>
+            <GradientStop Color="White" Offset="0"/>
+            <GradientStop Color="#7F71FFED" Offset="1"/>
+        </RadialGradientBrush>
+    </Window.Background>
+
+    <Grid Margin="0">
+
+        <Image x:Name="image" HorizontalAlignment="Left" Height="347" Margin="0,2,0,-0.2" VerticalAlignment="Top" Width="582" Source="/DeviceCirculationSystem;component/imageBackground.jpg" Stretch="Fill" Opacity="0.5"/>
+
+        <Label x:Name="Label" Content="用户名：" HorizontalAlignment="Left" Margin="175,141,0,0" VerticalAlignment="Top"
+               RenderTransformOrigin="0.63,0.383" FontSize="18" />
+        <Label x:Name="Label1" Content="密   码：" HorizontalAlignment="Left" Margin="175,191,0,0" VerticalAlignment="Top"
+               FontSize="18" Width="81" />
+        <TextBox x:Name="TextBoxUser" HorizontalAlignment="Left" Height="34" Margin="280,141,0,0" TextWrapping="Wrap"
+                 VerticalAlignment="Top" Width="145" Background="#BFFFFFFF" FontSize="18" VerticalContentAlignment="Center" TabIndex="0" />
+        <Button x:Name="BtnLogin" Content="登录" HorizontalAlignment="Left" Margin="131,256,0,0" VerticalAlignment="Top"
+                Width="134" Height="44" FontSize="18" Background="#CC89FFF0" IsDefault="True" Click="btnLogin_Click" TabIndex="2" />
+        <Button x:Name="BtnExit" Content="退出" HorizontalAlignment="Left" Margin="316,256,0,0" VerticalAlignment="Top"
+                Width="134" Height="44" FontSize="18" Background="#CCFF6767" IsCancel="True" Click="btnExit_Click" TabIndex="3"/>
+        <Label x:Name="Label2" Content="实验室设备自助借还系统" Margin="40,51,40,0" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="32"/>
+        <PasswordBox x:Name="PasswordBox" Margin="280,191,157.4,0" VerticalAlignment="Top" Height="32" Background="#BFFFFFFF" TabIndex="1" VerticalContentAlignment="Center"/>
+    </Grid>
+</Window>
