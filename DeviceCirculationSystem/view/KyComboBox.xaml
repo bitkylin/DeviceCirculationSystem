@@ -1,0 +1,13 @@
+﻿<UserControl x:Class="DeviceCirculationSystem.view.KyCombox"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:DeviceCirculationSystem.view"
+             mc:Ignorable="d">
+    <Grid>
+        <ComboBox x:Name="comboBox" Margin="0" IsEditable="True" VerticalContentAlignment="Center" MouseEnter="comboBox_MouseEnter" MouseLeave="comboBox_MouseLeave" KeyDown="comboBox_KeyDown" KeyUp="comboBox_KeyUp"/>
+        <Label x:Name="label" Content="Label" Margin="0,0,20.8,0" VerticalContentAlignment="Center" IsEnabled="False" IsHitTestVisible="False" HorizontalContentAlignment="Center"/>
+
+    </Grid>
+</UserControl>

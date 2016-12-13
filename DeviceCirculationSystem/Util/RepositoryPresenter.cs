@@ -15,7 +15,6 @@ namespace DeviceCirculationSystem.Util
         /// <returns></returns>
         public static DataTable QueryStorageLimitUser(Facility facility)
         {
-            Debug.WriteLine("facility.Category:"+ facility.Category+ ";facility.OwnUser:" + facility.OwnUser);
             return BitkyMySql.QueryStorageLimitUser(facility.Category, facility.OwnUser, KySet.TableStatusRepertory);
         }
 
@@ -32,6 +31,10 @@ namespace DeviceCirculationSystem.Util
                     return BitkyMySql.QueryStorageLimitUser(facility.Category, facility.OwnUser, KySet.TableLogLoan);
                 case DeviceStatus.Return:
                     return BitkyMySql.QueryStorageLimitUser(facility.Category, facility.OwnUser, KySet.TableLogReturn);
+                case DeviceStatus.Input:
+                    return BitkyMySql.QueryStorageLimitUser(facility.Category, facility.OwnUser, KySet.TableLogInput);
+                case DeviceStatus.Output:
+                    return BitkyMySql.QueryStorageLimitUser(facility.Category, facility.OwnUser, KySet.TableLogOutput);
             }
             throw new Exception("查询借出或归还情况表异常，设置有误");
         }

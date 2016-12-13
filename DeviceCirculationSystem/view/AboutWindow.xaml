@@ -16,7 +16,7 @@
         <Button x:Name="BtnClose" Content="X" HorizontalAlignment="Left" Margin="260,0,0,0" VerticalAlignment="Top" Width="40" Background="#BFFF0000" Height="20" FontSize="14" Click="btnClose_Click" IsCancel="True" IsDefault="True" TabIndex="0"/>
         <Label x:Name="Label1" Content="版本号:" HorizontalAlignment="Left" Margin="64,42,0,0" VerticalAlignment="Top"/>
         <Label x:Name="Label1Copy1" Content="版权所有:" HorizontalAlignment="Left" Margin="64,73,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="Label1Copy" Content="1.1" HorizontalAlignment="Left" Margin="130,42,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="Label1Copy" Content="1.5" HorizontalAlignment="Left" Margin="130,42,0,0" VerticalAlignment="Top"/>
         <Label x:Name="Label1Copy2" Content="桂林电子科技大学" HorizontalAlignment="Left" Margin="130,73,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.519,1.609"/>
         <Label x:Name="Label1Copy1_Copy" Content="开发者:" HorizontalAlignment="Left" Margin="64,104,0,0" VerticalAlignment="Top"/>
         <Label x:Name="Label1Copy2_Copy" Content="图书馆511实验室" HorizontalAlignment="Left" Margin="130,104,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.519,1.609"/>

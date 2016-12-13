@@ -86,6 +86,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="view\KyComboBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="view\LoginWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -120,6 +124,9 @@
     </Compile>
     <Compile Include="view\FacilityChangeWindow.xaml.cs">
       <DependentUpon>FacilityChangeWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view\KyComboBox.xaml.cs">
+      <DependentUpon>KyComboBox.xaml</DependentUpon>
     </Compile>
     <Compile Include="view\LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>

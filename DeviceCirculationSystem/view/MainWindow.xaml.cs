@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.Diagnostics;
 using System.Globalization;
 using System.Windows;
 using DeviceCirculationSystem.bean;
@@ -26,6 +27,10 @@ namespace DeviceCirculationSystem.view
             LabelUserName.Content = user.Name;
             RadioButtonQueryLab.IsChecked = true;
             RadioButtonQueryOutputLog.IsChecked = true;
+            ComboBoxQueryUser.LabelText = "所有用户";
+            ComboBoxQueryDevice.LabelText = "所有类别";
+            ComboBoxQueryUserLog.LabelText = "当前用户";
+            ComboBoxQueryCategoryLog.LabelText = "所有类别";
         }
 
         /// <summary>
@@ -34,6 +39,7 @@ namespace DeviceCirculationSystem.view
         private void BtnQuery_Click(object sender, RoutedEventArgs e)
         {
             var facilityCategory = ComboBoxQueryDevice.Text.Trim();
+            var facilityUser = ComboBoxQueryUser.Text.Trim();
             var facility = new Facility(DeviceStatus.Exist);
             facility.Category = facilityCategory;
 
@@ -46,7 +52,7 @@ namespace DeviceCirculationSystem.view
                     facility.OwnUser = _user.Name;
                     break;
                 case QueryStatus.All:
-                    facility.OwnUser = "";
+                    facility.OwnUser = facilityUser;
                     break;
                 default:
                     throw new Exception("查询状态设置错误");
@@ -80,15 +86,15 @@ namespace DeviceCirculationSystem.view
             }
             if (DataGridViewQuery.Items.Count == 0)
             {
-                setButtonEnabled(false, false, true, false);
+                SetButtonEnabled(false, false, true, false);
             }
             else if (_queryStatus == QueryStatus.Lab)
             {
-                setButtonEnabled(true, false, true, false);
+                SetButtonEnabled(true, false, true, false);
             }
             else if (_queryStatus == QueryStatus.Own)
             {
-                setButtonEnabled(false, true, true, true);
+                SetButtonEnabled(false, true, true, true);
             }
         }
 
@@ -106,7 +112,7 @@ namespace DeviceCirculationSystem.view
             {
                 MessageBox.Show("请选择表格中正确的条目!", "提示");
             }
-            setButtonEnabled(false, false, false, false);
+            SetButtonEnabled(false, false, false, false);
         }
 
         /// <summary>
@@ -123,7 +129,7 @@ namespace DeviceCirculationSystem.view
             {
                 MessageBox.Show("请选择表格中正确的条目!", "提示");
             }
-            setButtonEnabled(false, false, false, false);
+            SetButtonEnabled(false, false, false, false);
         }
 
         /// <summary>
@@ -140,7 +146,7 @@ namespace DeviceCirculationSystem.view
             {
                 MessageBox.Show("请选择表格中正确的条目!", "提示");
             }
-            setButtonEnabled(false, false, false, false);
+            SetButtonEnabled(false, false, false, false);
         }
 
         /// <summary>
@@ -157,7 +163,7 @@ namespace DeviceCirculationSystem.view
             {
                 MessageBox.Show("请选择表格中正确的条目!", "提示");
             }
-            setButtonEnabled(false, false, false, false);
+            SetButtonEnabled(false, false, false, false);
         }
 
         /// <summary>
@@ -165,12 +171,20 @@ namespace DeviceCirculationSystem.view
         /// </summary>
         private void btnQueryLog_Click(object sender, RoutedEventArgs e)
         {
-            var deviceCategory = ComboBoxQueryDeviceLog.Text.Trim();
-            var facility = new Facility(_queryLogStatus)
+            var deviceCategory = ComboBoxQueryCategoryLog.Text.Trim();
+            var deviceUser = ComboBoxQueryUserLog.Text.Trim();
+            var facility = new Facility(_queryLogStatus);
+
+            facility.Category = deviceCategory;
+            if (deviceUser.Equals(""))
             {
-                Category = deviceCategory,
-                OwnUser = _user.Name
-            };
+                facility.OwnUser = _user.Name;
+            }
+            else
+            {
+                facility.OwnUser = deviceUser;
+            }
+          
             try
             {
                 DataGridViewLog.ItemsSource = _presenter.QueryDeviceInputOutputLog(facility).DefaultView;
@@ -187,7 +201,7 @@ namespace DeviceCirculationSystem.view
         /// </summary>
         private void radioButtonQuery_Checked(object sender, RoutedEventArgs e)
         {
-            setButtonEnabled(false, false, true, false);
+            SetButtonEnabled(false, false, true, false);
 
             if (RadioButtonQueryLab.IsChecked == true)
                 _queryStatus = QueryStatus.Lab;
@@ -205,8 +219,12 @@ namespace DeviceCirculationSystem.view
         private void radioButtonQueryLog_Checked(object sender, RoutedEventArgs e)
         {
             if (RadioButtonQueryInputLog.IsChecked == true)
-                _queryLogStatus = DeviceStatus.Return;
+                _queryLogStatus = DeviceStatus.Input;
             else if (RadioButtonQueryOutputLog.IsChecked == true)
+                _queryLogStatus = DeviceStatus.Output;
+            else if (RadioButtonQueryReturnLog.IsChecked == true)
+                _queryLogStatus = DeviceStatus.Return;
+            else if (RadioButtonQueryLoanLog.IsChecked == true)
                 _queryLogStatus = DeviceStatus.Loan;
             else
                 throw new Exception("单选按钮(器件历史查询选择)改变事件异常");
@@ -259,7 +277,7 @@ namespace DeviceCirculationSystem.view
             return facility;
         }
 
-        private void setButtonEnabled(bool isLoan, bool isReturn, bool isInput, bool isOutput)
+        private void SetButtonEnabled(bool isLoan, bool isReturn, bool isInput, bool isOutput)
         {
             BtnLoanFromStorage.IsEnabled = isLoan;
             BtnReturnToStorage.IsEnabled = isReturn;
@@ -282,6 +300,26 @@ namespace DeviceCirculationSystem.view
         {
             var aboutWindow = new AboutWindow();
             aboutWindow.Show();
+        }
+
+        /// <summary>
+        /// 在用户下拉菜单中输入后自动更改单选框
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ComboBoxQueryUser_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            RadioButtonQueryAll.IsChecked = true;
+        }
+
+        /// <summary>
+        /// 在用户下拉菜单中点击后自动更改单选框
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ComboBoxQueryUser_PreviewMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            RadioButtonQueryAll.IsChecked = true;
         }
     }
 }

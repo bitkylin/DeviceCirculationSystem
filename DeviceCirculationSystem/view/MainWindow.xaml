@@ -1,13 +1,14 @@
-﻿<Window x:Class="DeviceCirculationSystem.view.MainWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DeviceCirculationSystem.view" x:Class="DeviceCirculationSystem.view.MainWindow"
         mc:Ignorable="d"
         Title="实验室设备自助借还系统" Height="576" Width="1024" MinWidth="1024" MinHeight="576" Closed="Window_Closed"
         WindowStartupLocation="CenterScreen">
     <Window.ContextMenu>
-        <ContextMenu Name="ChangePassword">
+        <ContextMenu x:Name="ChangePassword">
 
 
             <MenuItem Header="修改登录密码"
@@ -49,9 +50,6 @@
                     <Label x:Name="Label" Content="类别:" Margin="13.8,15,0,0" VerticalAlignment="Top" MaxWidth="70"
                            HorizontalAlignment="Left" Width="40" Height="30" HorizontalContentAlignment="Center"
                            VerticalContentAlignment="Center" Grid.Column="2" />
-                    <ComboBox x:Name="ComboBoxQueryDevice" Margin="58.8,16,5,0" VerticalAlignment="Top" Height="30"
-                              IsEditable="True" MaxWidth="200" VerticalContentAlignment="Center"
-                              TabIndex="0" Grid.Column="2" />
                     <GroupBox x:Name="GroupBoxCopy" Header="设备流转" VerticalAlignment="Top" Height="55"
                               Margin="0,0,156.8,0" MaxWidth="400" Grid.Column="3" HorizontalAlignment="Right" Width="136" />
                     <Button x:Name="BtnLoanFromStorage" Content="借出" Margin="0,16,231.8,0" VerticalAlignment="Top"
@@ -72,41 +70,50 @@
                     <Label x:Name="Label_Copy" Content="用户:" Margin="7.8,15,0,0" VerticalAlignment="Top" MaxWidth="70"
                         HorizontalAlignment="Left" Width="45" Height="30" HorizontalContentAlignment="Center"
                         VerticalContentAlignment="Center" Grid.Column="1" />
-                    <ComboBox x:Name="ComboBoxQueryDevice_Copy" Margin="57.8,15,18.2,0" VerticalAlignment="Top" Height="30"
-                        IsEditable="True" MaxWidth="200" VerticalContentAlignment="Center"
-                        TabIndex="0" Grid.Column="1" />
                     <Button x:Name="BtnOutputStorage" Content="出库" Margin="0,16,20.8,0" VerticalAlignment="Top"
                         Height="30" Background="#BFB7CAFF" HorizontalAlignment="Right" Width="50" TabIndex="3" Grid.Column="3" Click="BtnOutputStorage_Click" />
+                    <local:KyCombox x:Name="ComboBoxQueryUser" Margin="58,15,10.2,0" VerticalAlignment="Top" Height="30" PreviewMouseDown="ComboBoxQueryUser_PreviewMouseDown" Grid.Column="1" KeyDown="ComboBoxQueryUser_KeyDown"/>
+                    <local:KyCombox x:Name="ComboBoxQueryDevice" Margin="58.8,15,5,0" VerticalAlignment="Top" Height="30" PreviewMouseDown="ComboBoxQueryUser_PreviewMouseDown" Grid.Column="2" KeyDown="ComboBoxQueryUser_KeyDown"/>
                 </Grid>
             </TabItem>
             <TabItem Header="历史查询" Height="25" Width="150" Background="#7F62CFFF">
                 <Grid Background="#7FFFFFFF">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="667*" />
-                        <ColumnDefinition Width="125*" />
-                        <ColumnDefinition Width="137*" />
+                        <ColumnDefinition Width="477*" />
+                        <ColumnDefinition Width="140*"/>
+                        <ColumnDefinition Width="96*"/>
+                        <ColumnDefinition Width="139*" />
+                        <ColumnDefinition Width="141*"/>
                     </Grid.ColumnDefinitions>
-                    <GroupBox x:Name="GroupBoxCopy1" Header="查询类别" VerticalAlignment="Top" Height="55"
+                    <GroupBox x:Name="GroupBoxCopy1" Header="历史查询类别" VerticalAlignment="Top" Height="55"
                               HorizontalAlignment="Left" Width="267" Margin="10,0,0,0" />
-                    <RadioButton x:Name="RadioButtonQueryInputLog" Content="归还历史" HorizontalAlignment="Left"
-                                 Margin="77,22,0,0" VerticalAlignment="Top" Height="14" Width="80"
+                    <RadioButton x:Name="RadioButtonQueryReturnLog" Content="归还" HorizontalAlignment="Left"
+                                 Margin="17,22,0,0" VerticalAlignment="Top" Height="14" Width="55"
                                  Checked="radioButtonQueryLog_Checked" />
-                    <RadioButton x:Name="RadioButtonQueryOutputLog" Content="借出历史" HorizontalAlignment="Left"
-                                 Margin="162,22,0,0" VerticalAlignment="Top" Height="14" Width="80"
+                    <RadioButton x:Name="RadioButtonQueryLoanLog" Content="借出" HorizontalAlignment="Left"
+                                 Margin="77,22,0,0" VerticalAlignment="Top" Height="14" Width="55"
                                  Checked="radioButtonQueryLog_Checked" />
-                    <Label x:Name="LabelCopy" Content="设备名称:" Margin="0,17,2.2,0" VerticalAlignment="Top" MaxWidth="70"
-                           HorizontalAlignment="Right" Width="73" Height="30" HorizontalContentAlignment="Center"
-                           VerticalContentAlignment="Center" />
-                    <ComboBox x:Name="ComboBoxQueryDeviceLog" Margin="7.8,17,2,0" VerticalAlignment="Top" Height="30"
-                              IsEditable="True" MaxWidth="200" VerticalContentAlignment="Center" Grid.Column="1"
-                              TabIndex="0" />
-                    <Button x:Name="BtnQueryLog" Content="查询" Margin="10,17,0,0" VerticalAlignment="Top" Height="30"
-                            Background="#BFB7CAFF" HorizontalAlignment="Left" Width="100" Grid.Column="2"
+                    <Label x:Name="LabelCopy" Content="类别：" Margin="0,17,5,0" VerticalAlignment="Top" MaxWidth="70"
+                           HorizontalAlignment="Right" Width="46" Height="30" HorizontalContentAlignment="Center"
+                           VerticalContentAlignment="Center" Grid.Column="2" />
+                    <Button x:Name="BtnQueryLog" Content="查询" Margin="15,17,0,0" VerticalAlignment="Top" Height="30"
+                            Background="#BFB7CAFF" HorizontalAlignment="Left" Width="100" Grid.Column="4"
                             Click="btnQueryLog_Click" />
-                    <DataGrid x:Name="DataGridViewLog" Margin="10,60,9.8,0.4" BorderBrush="#00000000"
-                              Grid.ColumnSpan="3" Background="#00000000" RowBackground="#00000000"
+                    <DataGrid x:Name="DataGridViewLog" Margin="10,60,9.8,0.2" BorderBrush="#00000000"
+                              Grid.ColumnSpan="5" Background="#00000000" RowBackground="#00000000"
                               AlternatingRowBackground="#00000000" HorizontalGridLinesBrush="#7F767676"
                               VerticalGridLinesBrush="#7F767676" />
+                    <Label x:Name="LabelCopy_Copy" Content="用户：" Margin="0,17,5,0" VerticalAlignment="Top" MaxWidth="70"
+                        HorizontalAlignment="Right" Width="45" Height="30" HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center" />
+                    <RadioButton x:Name="RadioButtonQueryInputLog" Content="入库" HorizontalAlignment="Left"
+                        Margin="137,22,0,0" VerticalAlignment="Top" Height="14" Width="55"
+                        Checked="radioButtonQueryLog_Checked" />
+                    <RadioButton x:Name="RadioButtonQueryOutputLog" Content="出库" HorizontalAlignment="Left"
+                        Margin="197,22,0,0" VerticalAlignment="Top" Height="14" Width="55"
+                        Checked="radioButtonQueryLog_Checked" />
+                    <local:KyCombox x:Name="ComboBoxQueryUserLog" Margin="5,17,5,0" VerticalAlignment="Top" Height="30" PreviewMouseDown="ComboBoxQueryUser_PreviewMouseDown" KeyDown="ComboBoxQueryUser_KeyDown" Grid.Column="1"/>
+                    <local:KyCombox x:Name="ComboBoxQueryCategoryLog" Margin="5,16,5,0" VerticalAlignment="Top" Height="30" PreviewMouseDown="ComboBoxQueryUser_PreviewMouseDown" KeyDown="ComboBoxQueryUser_KeyDown" Grid.Column="3"/>
                 </Grid>
             </TabItem>
         </TabControl>

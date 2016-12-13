@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Navigation;
 using DeviceCirculationSystem.bean;
 using DeviceCirculationSystem.Util;
 
@@ -42,6 +44,7 @@ namespace DeviceCirculationSystem.view
         {
             Environment.Exit(0);
         }
+        
 
         private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
