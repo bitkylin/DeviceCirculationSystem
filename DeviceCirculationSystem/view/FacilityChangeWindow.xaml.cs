@@ -17,12 +17,14 @@ namespace DeviceCirculationSystem.view
     {
         private readonly Facility _facility;
         private readonly DeviceStatus _status;
+        private IMainView _view;
 
-        public FacilityChangeWindow(Facility facility)
+        public FacilityChangeWindow(Facility facility, IMainView view)
         {
             InitializeComponent();
             _status = facility.Status;
             _facility = facility;
+            _view = view;
             facility.DateTime = DateTime.Now;
             InitWidgetStatus(facility);
             switch (_status)
@@ -166,21 +168,22 @@ namespace DeviceCirculationSystem.view
                 switch (_status)
                 {
                     case DeviceStatus.Return:
-                        MessageBox.Show("归还成功！请查询最新库存信息！", "提示");
+                        MessageBox.Show("归还成功！已刷新最新的库存信息！", "提示");
                         break;
                     case DeviceStatus.Loan:
-                        MessageBox.Show("借出成功！请查询最新库存信息！", "提示");
+                        MessageBox.Show("借出成功！已刷新最新的库存信息！", "提示");
                         break;
                     case DeviceStatus.Input:
-                        MessageBox.Show("入库成功！请查询最新库存信息！", "提示");
+                        MessageBox.Show("入库成功！已刷新最新的库存信息！", "提示");
                         break;
                     case DeviceStatus.Output:
-                        MessageBox.Show("出库成功！请查询最新库存信息！", "提示");
+                        MessageBox.Show("出库成功！已刷新最新的库存信息！", "提示");
                         break;
 
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
+                _view.refreshQueryStorage();
             }
             catch (NumBelowZeroException)
             {

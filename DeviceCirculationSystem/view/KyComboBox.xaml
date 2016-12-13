@@ -7,7 +7,7 @@
              mc:Ignorable="d">
     <Grid>
         <ComboBox x:Name="comboBox" Margin="0" IsEditable="True" VerticalContentAlignment="Center" MouseEnter="comboBox_MouseEnter" MouseLeave="comboBox_MouseLeave" KeyDown="comboBox_KeyDown" KeyUp="comboBox_KeyUp"/>
-        <Label x:Name="label" Content="Label" Margin="0,0,20.8,0" VerticalContentAlignment="Center" IsEnabled="False" IsHitTestVisible="False" HorizontalContentAlignment="Center"/>
+        <Label x:Name="label" Content="Label" Margin="0,0,20.8,0" VerticalContentAlignment="Center" IsEnabled="False" IsHitTestVisible="False" Foreground="#7F000000" FontSize="10" HorizontalContentAlignment="Center"/>
 
     </Grid>
 </UserControl>

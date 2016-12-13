@@ -12,7 +12,7 @@ namespace DeviceCirculationSystem.view
     /// <summary>
     ///     MainWindow.xaml 的交互逻辑
     /// </summary>
-    public partial class MainWindow
+    public partial class MainWindow:IMainView
     {
         private readonly RepositoryPresenter _presenter = new RepositoryPresenter();
         private readonly User _user;
@@ -105,7 +105,7 @@ namespace DeviceCirculationSystem.view
         {
             try
             {
-                _facilityChangeWindow = new FacilityChangeWindow(BuildDevice(DeviceStatus.Loan));
+                _facilityChangeWindow = new FacilityChangeWindow(BuildDevice(DeviceStatus.Loan), this);
                 _facilityChangeWindow.Show();
             }
             catch (NotFoundFacilityException)
@@ -122,7 +122,7 @@ namespace DeviceCirculationSystem.view
         {
             try
             {
-                _facilityChangeWindow = new FacilityChangeWindow(BuildDevice(DeviceStatus.Return));
+                _facilityChangeWindow = new FacilityChangeWindow(BuildDevice(DeviceStatus.Return), this);
                 _facilityChangeWindow.Show();
             }
             catch (NotFoundFacilityException)
@@ -139,7 +139,7 @@ namespace DeviceCirculationSystem.view
         {
             try
             {
-                _facilityChangeWindow = new FacilityChangeWindow(BuildDevice(DeviceStatus.Input));
+                _facilityChangeWindow = new FacilityChangeWindow(BuildDevice(DeviceStatus.Input), this);
                 _facilityChangeWindow.Show();
             }
             catch (NotFoundFacilityException)
@@ -156,7 +156,7 @@ namespace DeviceCirculationSystem.view
         {
             try
             {
-                _facilityChangeWindow = new FacilityChangeWindow(BuildDevice(DeviceStatus.Output));
+                _facilityChangeWindow = new FacilityChangeWindow(BuildDevice(DeviceStatus.Output),this);
                 _facilityChangeWindow.Show();
             }
             catch (NotFoundFacilityException)
@@ -320,6 +320,14 @@ namespace DeviceCirculationSystem.view
         private void ComboBoxQueryUser_PreviewMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             RadioButtonQueryAll.IsChecked = true;
+        }
+
+        /// <summary>
+        /// 刷新库存信息
+        /// </summary>
+        public void refreshQueryStorage()
+        {
+            BtnQuery_Click(null, null);
         }
     }
 }

@@ -73,7 +73,7 @@
                     <Button x:Name="BtnOutputStorage" Content="出库" Margin="0,16,20.8,0" VerticalAlignment="Top"
                         Height="30" Background="#BFB7CAFF" HorizontalAlignment="Right" Width="50" TabIndex="3" Grid.Column="3" Click="BtnOutputStorage_Click" />
                     <local:KyCombox x:Name="ComboBoxQueryUser" Margin="58,15,10.2,0" VerticalAlignment="Top" Height="30" PreviewMouseDown="ComboBoxQueryUser_PreviewMouseDown" Grid.Column="1" KeyDown="ComboBoxQueryUser_KeyDown"/>
-                    <local:KyCombox x:Name="ComboBoxQueryDevice" Margin="58.8,15,5,0" VerticalAlignment="Top" Height="30" PreviewMouseDown="ComboBoxQueryUser_PreviewMouseDown" Grid.Column="2" KeyDown="ComboBoxQueryUser_KeyDown"/>
+                    <local:KyCombox x:Name="ComboBoxQueryDevice" Margin="58.8,15,5,0" VerticalAlignment="Top" Height="30" Grid.Column="2"/>
                 </Grid>
             </TabItem>
             <TabItem Header="历史查询" Height="25" Width="150" Background="#7F62CFFF">
@@ -112,8 +112,8 @@
                     <RadioButton x:Name="RadioButtonQueryOutputLog" Content="出库" HorizontalAlignment="Left"
                         Margin="197,22,0,0" VerticalAlignment="Top" Height="14" Width="55"
                         Checked="radioButtonQueryLog_Checked" />
-                    <local:KyCombox x:Name="ComboBoxQueryUserLog" Margin="5,17,5,0" VerticalAlignment="Top" Height="30" PreviewMouseDown="ComboBoxQueryUser_PreviewMouseDown" KeyDown="ComboBoxQueryUser_KeyDown" Grid.Column="1"/>
-                    <local:KyCombox x:Name="ComboBoxQueryCategoryLog" Margin="5,16,5,0" VerticalAlignment="Top" Height="30" PreviewMouseDown="ComboBoxQueryUser_PreviewMouseDown" KeyDown="ComboBoxQueryUser_KeyDown" Grid.Column="3"/>
+                    <local:KyCombox x:Name="ComboBoxQueryUserLog" Margin="5,17,5,0" VerticalAlignment="Top" Height="30" Grid.Column="1"/>
+                    <local:KyCombox x:Name="ComboBoxQueryCategoryLog" Margin="5,16,5,0" VerticalAlignment="Top" Height="30" Grid.Column="3"/>
                 </Grid>
             </TabItem>
         </TabControl>

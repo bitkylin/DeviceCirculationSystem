@@ -125,6 +125,7 @@
     <Compile Include="view\FacilityChangeWindow.xaml.cs">
       <DependentUpon>FacilityChangeWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="view\IMainView.cs" />
     <Compile Include="view\KyComboBox.xaml.cs">
       <DependentUpon>KyComboBox.xaml</DependentUpon>
     </Compile>
