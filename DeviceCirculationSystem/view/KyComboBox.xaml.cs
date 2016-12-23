@@ -38,11 +38,16 @@ namespace DeviceCirculationSystem.view
             }
         }
 
-        private ComboBox ComboBox;
-
         public KyCombox()
         {
             InitializeComponent();
+        }
+
+        public void addItem(string msg)
+        {
+            ComboBoxItem comboBoxItem = new ComboBoxItem();
+            comboBoxItem.Content = msg;
+            comboBox.Items.Add(comboBoxItem);
         }
 
         private void comboBox_MouseEnter(object sender, MouseEventArgs e)
@@ -51,11 +56,18 @@ namespace DeviceCirculationSystem.view
 
         private void comboBox_MouseLeave(object sender, MouseEventArgs e)
         {
+            if (comboBox.Text.Equals(""))
+            {
+                label.Content = _hintLalelShow;
+            }
+            else
+            {
+                label.Content = "";
+            }
         }
 
         private void comboBox_KeyDown(object sender, KeyEventArgs e)
         {
-          
         }
 
         private void comboBox_KeyUp(object sender, KeyEventArgs e)

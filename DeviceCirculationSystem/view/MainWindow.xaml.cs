@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
 using System.Globalization;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Documents;
 using DeviceCirculationSystem.bean;
 using DeviceCirculationSystem.bean.@enum;
 using DeviceCirculationSystem.Util;
@@ -12,7 +15,7 @@ namespace DeviceCirculationSystem.view
     /// <summary>
     ///     MainWindow.xaml 的交互逻辑
     /// </summary>
-    public partial class MainWindow:IMainView
+    public partial class MainWindow : IMainView
     {
         private readonly RepositoryPresenter _presenter = new RepositoryPresenter();
         private readonly User _user;
@@ -27,10 +30,36 @@ namespace DeviceCirculationSystem.view
             LabelUserName.Content = user.Name;
             RadioButtonQueryLab.IsChecked = true;
             RadioButtonQueryOutputLog.IsChecked = true;
+            InitComboBox();
+        }
+
+        /// <summary>
+        /// 初始化ComboBox
+        /// </summary>
+        private void InitComboBox()
+        {
+            var comboBoxDeviceList = RepositoryPresenter.GetDefaultDevices();
+
             ComboBoxQueryUser.LabelText = "所有用户";
             ComboBoxQueryDevice.LabelText = "所有类别";
             ComboBoxQueryUserLog.LabelText = "当前用户";
             ComboBoxQueryCategoryLog.LabelText = "所有类别";
+
+            comboBoxDeviceList.ForEach(str =>
+            {
+                ComboBoxQueryDevice.addItem(str);
+                ComboBoxQueryCategoryLog.addItem(str);
+            });
+
+            ComboBoxQueryUserLog.addItem("当前用户");
+            ComboBoxQueryUser.addItem("全部");
+
+            var userNameList = RepositoryPresenter.QueryUserNameAll();
+            userNameList.ForEach(str =>
+            {
+                ComboBoxQueryUserLog.addItem(str);
+                ComboBoxQueryUser.addItem(str);
+            });
         }
 
         /// <summary>
@@ -156,7 +185,7 @@ namespace DeviceCirculationSystem.view
         {
             try
             {
-                _facilityChangeWindow = new FacilityChangeWindow(BuildDevice(DeviceStatus.Output),this);
+                _facilityChangeWindow = new FacilityChangeWindow(BuildDevice(DeviceStatus.Output), this);
                 _facilityChangeWindow.Show();
             }
             catch (NotFoundFacilityException)
@@ -176,7 +205,7 @@ namespace DeviceCirculationSystem.view
             var facility = new Facility(_queryLogStatus);
 
             facility.Category = deviceCategory;
-            if (deviceUser.Equals(""))
+            if (deviceUser.Equals("") || deviceUser.Equals("当前用户"))
             {
                 facility.OwnUser = _user.Name;
             }
@@ -184,7 +213,7 @@ namespace DeviceCirculationSystem.view
             {
                 facility.OwnUser = deviceUser;
             }
-          
+
             try
             {
                 DataGridViewLog.ItemsSource = _presenter.QueryDeviceInputOutputLog(facility).DefaultView;

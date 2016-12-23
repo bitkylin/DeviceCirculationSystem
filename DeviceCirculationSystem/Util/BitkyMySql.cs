@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
 using System.Globalization;
+using System.Windows.Documents;
 using DeviceCirculationSystem.bean;
 using DeviceCirculationSystem.bean.@enum;
 using MySql.Data.MySqlClient;
@@ -109,8 +111,8 @@ namespace DeviceCirculationSystem.Util
         public static DataTable QueryStorageLimitUser(string category, string user, string tableName)
         {
             DataTable dataTable = null;
-            var haveCategory = (category != null) && !category.Equals("");
-            var haveUser = (user != null) && !user.Equals("");
+            var haveCategory = (category != null) && !category.Equals("") && !category.Equals("全部");
+            var haveUser = (user != null) && !user.Equals("") && !user.Equals("全部");
             Debug.WriteLine("haveCategory:" + haveCategory + "; haveUser:" + haveUser);
             var sql = "";
             //类别为空, 用户不为空
@@ -326,6 +328,45 @@ namespace DeviceCirculationSystem.Util
                 needNum = 0;
             ConnClose();
             return needNum;
+        }
+
+        public static List<string> queryUserNameAll()
+        {
+            var list = new List<string>();
+
+            var sqlExec =
+                $"SELECT Name FROM {KySet.TableUserPermissionWorkManager} WHERE Name != '实验室' AND Name != 'admin'";
+            ConnBuild_WorkManager();
+            var comm = new MySqlCommand(sqlExec, _connection);
+            var read = comm.ExecuteReader();
+            if (read.HasRows)
+            {
+                while (read.Read())
+                {
+                    list.Add(read.GetString(0));
+                }
+            }
+            ConnClose();
+            return list;
+        }
+
+        public static List<string> queryDistinctDevice()
+        {
+            var list = new List<string>();
+
+            var sqlExec = $"SELECT distinct 类别 FROM {KySet.TableStatusRepertory}";
+            ConnBuild();
+            var comm = new MySqlCommand(sqlExec, _connection);
+            var read = comm.ExecuteReader();
+            if (read.HasRows)
+            {
+                while (read.Read())
+                {
+                    list.Add(read.GetString(0));
+                }
+            }
+            ConnClose();
+            return list;
         }
     }
 }
