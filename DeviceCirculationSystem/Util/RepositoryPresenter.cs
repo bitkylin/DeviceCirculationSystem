@@ -15,9 +15,9 @@ namespace DeviceCirculationSystem.Util
         /// </summary>
         /// <param name="facility">包含用户名，设备类别</param>
         /// <returns></returns>
-        public static DataTable QueryStorageLimitUser(Facility facility)
+        public static DataTable queryStorageLimitUser(Facility facility)
         {
-            return BitkyMySql.QueryStorageLimitUser(facility.Category, facility.OwnUser, KySet.TableStatusRepertory);
+            return KyMySql.queryStorageLimitUser(facility.category, facility.ownUser, KySet.TableStatusRepertory);
         }
 
         /// <summary>
@@ -25,32 +25,32 @@ namespace DeviceCirculationSystem.Util
         /// </summary>
         /// <param name="facility">包含用户名，设备类别</param>
         /// <returns></returns>
-        public DataTable QueryDeviceInputOutputLog(Facility facility)
+        public DataTable queryDeviceInputOutputLog(Facility facility)
         {
-            switch (facility.Status)
+            switch (facility.status)
             {
                 case DeviceStatus.LOAN:
-                    return BitkyMySql.QueryStorageLimitUser(facility.Category, facility.OwnUser, KySet.TableLogLoan);
+                    return KyMySql.queryStorageLimitUser(facility.category, facility.ownUser, KySet.TableLogLoan);
                 case DeviceStatus.RETURN:
-                    return BitkyMySql.QueryStorageLimitUser(facility.Category, facility.OwnUser, KySet.TableLogReturn);
+                    return KyMySql.queryStorageLimitUser(facility.category, facility.ownUser, KySet.TableLogReturn);
                 case DeviceStatus.INPUT:
-                    return BitkyMySql.QueryStorageLimitUser(facility.Category, facility.OwnUser, KySet.TableLogInput);
+                    return KyMySql.queryStorageLimitUser(facility.category, facility.ownUser, KySet.TableLogInput);
                 case DeviceStatus.OUTPUT:
-                    return BitkyMySql.QueryStorageLimitUser(facility.Category, facility.OwnUser, KySet.TableLogOutput);
+                    return KyMySql.queryStorageLimitUser(facility.category, facility.ownUser, KySet.TableLogOutput);
             }
             throw new Exception("查询借出或归还情况表异常，设置有误");
         }
 
-        public static List<string> QueryUserNameAll()
+        public static List<string> queryUserNameAll()
         {
-            return BitkyMySql.queryUserNameAll();
+            return KyMySql.queryUserNameAll();
         }
 
-        public static List<string> GetDefaultDevices()
+        public static List<string> getDefaultDevices()
         {
             var defaultDeviceist = new List<string> {"全部", "图书", "电脑", "元器件", "开发工具"};
 
-            var newDeviceList = BitkyMySql.queryDistinctDevice();
+            var newDeviceList = KyMySql.queryDistinctDevice();
             newDeviceList.ForEach(str =>
             {
                 var isNew = true;

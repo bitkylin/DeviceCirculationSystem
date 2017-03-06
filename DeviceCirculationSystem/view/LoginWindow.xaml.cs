@@ -26,7 +26,7 @@ namespace DeviceCirculationSystem.view
                 MessageBox.Show("请输入用户名和密码!", "警告");
             else
             {
-                var havePermission = BitkyMySql.VerifyPermission_WorkManager(userName, password);
+                var havePermission = KyMySql.VerifyPermission_WorkManager(userName, password);
                 if (havePermission)
                 {
                     var window = new MainWindow(new User(userName));

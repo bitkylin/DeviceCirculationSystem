@@ -13,7 +13,7 @@ namespace DeviceCirculationSystem.view
         public ChangePasswordWindow(User user)
         {
             InitializeComponent();
-            TextBoxUserName.Text = user.Name;
+            TextBoxUserName.Text = user.name;
             TextBoxUserName.IsEnabled = false;
         }
 
@@ -35,9 +35,9 @@ namespace DeviceCirculationSystem.view
             }
 
 
-            if (BitkyMySql.VerifyPermission_WorkManager(userName, passwordOrigin))
+            if (KyMySql.VerifyPermission_WorkManager(userName, passwordOrigin))
             {
-                BitkyMySql.ChangePassword_WorkManager(userName, passwordFuture);
+                KyMySql.ChangePassword_WorkManager(userName, passwordFuture);
                 MessageBox.Show("密码修改成功！", "提示");
                 Close();
             }

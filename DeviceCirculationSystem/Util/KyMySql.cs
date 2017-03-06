@@ -10,11 +10,11 @@ using MySql.Data.MySqlClient;
 
 namespace DeviceCirculationSystem.Util
 {
-    internal static class BitkyMySql
+    internal static class KyMySql
     {
         private static MySqlConnection _connection;
 
-        private static void ConnBuild()
+        private static void connBuild()
         {
             string mysqlLogin =
                 $"server = {KySet.ServerIp}; User Id = {KySet.ServerUserName}; password = {KySet.ServerPassword}; Database = {KySet.ServerDatabase}; charset = utf8; Convert Zero Datetime = True";
@@ -30,7 +30,7 @@ namespace DeviceCirculationSystem.Util
             _connection.Open();
         }
 
-        private static void ConnClose()
+        private static void connClose()
         {
             _connection.Close();
         }
@@ -41,12 +41,12 @@ namespace DeviceCirculationSystem.Util
         /// <param name="userName">键入的用户名</param>
         /// <param name="password">键入的密码</param>
         /// <returns>是否有权限</returns>
-        public static bool VerifyPermission(string userName, string password)
+        public static bool verifyPermission(string userName, string password)
         {
             var verify = false;
             var sql =
                 $"SELECT * FROM {KySet.TableUserPermission} WHERE Name = '{userName}' AND Password = '{password}'";
-            ConnBuild();
+            connBuild();
             var comm = new MySqlCommand(sql, _connection);
             var read = comm.ExecuteReader();
             if (read.HasRows)
@@ -54,7 +54,7 @@ namespace DeviceCirculationSystem.Util
                 read.Close();
                 verify = true;
             }
-            ConnClose();
+            connClose();
             return verify;
         }
 
@@ -78,17 +78,17 @@ namespace DeviceCirculationSystem.Util
                 read.Close();
                 verify = true;
             }
-            ConnClose();
+            connClose();
             return verify;
         }
 
-        public static void ChangePassword(string userName, string password)
+        public static void changePassword(string userName, string password)
         {
             var sql = $"update {KySet.TableUserPermission} set 密码 = '{password}' where 用户名 = '{userName}'";
-            ConnBuild();
+            connBuild();
             var cmdChangeStatus = new MySqlCommand(sql, _connection);
             cmdChangeStatus.ExecuteNonQuery();
-            ConnClose();
+            connClose();
         }
 
         public static void ChangePassword_WorkManager(string userName, string password)
@@ -98,7 +98,7 @@ namespace DeviceCirculationSystem.Util
             ConnBuild_WorkManager();
             var cmdChangeStatus = new MySqlCommand(sql, _connection);
             cmdChangeStatus.ExecuteNonQuery();
-            ConnClose();
+            connClose();
         }
 
         /// <summary>
@@ -108,7 +108,7 @@ namespace DeviceCirculationSystem.Util
         /// <param name="user">限定的用户</param>
         /// <param name="tableName">待查询的表</param>
         /// <returns>对应到DataGridView的数据表</returns>
-        public static DataTable QueryStorageLimitUser(string category, string user, string tableName)
+        public static DataTable queryStorageLimitUser(string category, string user, string tableName)
         {
             DataTable dataTable = null;
             var haveCategory = (category != null) && !category.Equals("") && !category.Equals("全部");
@@ -130,7 +130,7 @@ namespace DeviceCirculationSystem.Util
             if (sql.Equals(""))
                 throw new Exception();
 
-            ConnBuild();
+            connBuild();
             Debug.WriteLine("QueryStorageLimitUser:" + sql);
             var comm = new MySqlCommand(sql, _connection);
             var read = comm.ExecuteReader();
@@ -143,7 +143,7 @@ namespace DeviceCirculationSystem.Util
                 dataTable = ds.Tables[0];
             }
 
-            ConnClose();
+            connClose();
             if (dataTable == null)
                 throw new NotFoundFacilityException();
             return dataTable;
@@ -153,52 +153,52 @@ namespace DeviceCirculationSystem.Util
         ///     用户向实验室仓库入库器件，外观模式
         /// </summary>
         /// <param name="facility"></param>
-        public static void FacilityInputToRepository(Facility facility)
+        public static void facilityInputToRepository(Facility facility)
         {
             //用户入库器件，记录最终器件操作者为实验室
-            InputFacility(facility, facility.ToUser);
+            inputFacility(facility, facility.toUser);
             //将此条归还记录插入入库记录表，记录者为用户
-            InsertLogTable(facility, DeviceStatus.INPUT, facility.OwnUser);
+            insertLogTable(facility, DeviceStatus.INPUT, facility.ownUser);
         }
 
         /// <summary>
         ///     用户从自己的仓库出库器件，外观模式
         /// </summary>
         /// <param name="facility"></param>
-        public static void FacilityOutputFromRepository(Facility facility)
+        public static void facilityOutputFromRepository(Facility facility)
         {
             //从用户拥有库存中出库器件，记录者为用户
-            OutputFacility(facility, facility.OwnUser);
+            outputFacility(facility, facility.ownUser);
             //将此条归还记录插入归还记录表，记录者为用户
-            InsertLogTable(facility, DeviceStatus.OUTPUT, facility.OwnUser);
+            insertLogTable(facility, DeviceStatus.OUTPUT, facility.ownUser);
         }
 
         /// <summary>
         ///     用户借出器件，外观模式
         /// </summary>
         /// <param name="facility"></param>
-        public static void LoanFacilityFromRepository(Facility facility)
+        public static void loanFacilityFromRepository(Facility facility)
         {
             //从实验室库存中出库器件，记录者为实验室
-            OutputFacility(facility, facility.OwnUser);
+            outputFacility(facility, facility.ownUser);
             //在用户拥有库存中入库器件，记录者为用户
-            InputFacility(facility, facility.ToUser);
+            inputFacility(facility, facility.toUser);
             //将此条归还记录插入借出记录表，记录者为用户
-            InsertLogTable(facility, DeviceStatus.LOAN, facility.ToUser);
+            insertLogTable(facility, DeviceStatus.LOAN, facility.toUser);
         }
 
         /// <summary>
         ///     用户归还器件，外观模式
         /// </summary>
         /// <param name="facility"></param>
-        public static void ReturnFacilityToRepository(Facility facility)
+        public static void returnFacilityToRepository(Facility facility)
         {
             //从用户拥有库存中出库器件，记录者为用户
-            OutputFacility(facility, facility.OwnUser);
+            outputFacility(facility, facility.ownUser);
             //在实验室库存中入库器件，记录者为实验室
-            InputFacility(facility, facility.ToUser);
+            inputFacility(facility, facility.toUser);
             //将此条归还记录插入归还记录表，记录者为用户
-            InsertLogTable(facility, DeviceStatus.RETURN, facility.OwnUser);
+            insertLogTable(facility, DeviceStatus.RETURN, facility.ownUser);
         }
 
         /// <summary>
@@ -207,10 +207,10 @@ namespace DeviceCirculationSystem.Util
         /// <param name="facility">器件信息</param>
         /// <param name="status">插入表的类型</param>
         /// <param name="user">操作者姓名</param>
-        private static void InsertLogTable(Facility facility, DeviceStatus status, string user)
+        private static void insertLogTable(Facility facility, DeviceStatus status, string user)
         {
             //计算出库器件总价
-            var priceTotal = (facility.Price*facility.Num).ToString(CultureInfo.CurrentCulture);
+            var priceTotal = (facility.price*facility.num).ToString(CultureInfo.CurrentCulture);
             string logTable;
 
             switch (status)
@@ -232,13 +232,13 @@ namespace DeviceCirculationSystem.Util
             }
             if (logTable == null) throw new Exception();
             string sqlLogTable =
-                $"INSERT INTO {logTable} values ( '{facility.Id}','{facility.Category}','{facility.Name}','{facility.ModelNum}','{facility.Parameter}','{facility.Num}','{user}','{facility.DateTime.ToString("yyyy-MM-dd HH:mm:ss")}','{facility.Price}','{priceTotal}','{facility.Note}')";
+                $"INSERT INTO {logTable} values ( '{facility.id}','{facility.category}','{facility.name}','{facility.modelNum}','{facility.parameter}','{facility.num}','{user}','{facility.dateTime.ToString("yyyy-MM-dd HH:mm:ss")}','{facility.price}','{priceTotal}','{facility.note}')";
             if (sqlLogTable == null)
                 throw new Exception();
-            ConnBuild();
+            connBuild();
             var cmdChangeLog = new MySqlCommand(sqlLogTable, _connection);
             cmdChangeLog.ExecuteNonQuery();
-            ConnClose();
+            connClose();
         }
 
         /// <summary>
@@ -246,10 +246,10 @@ namespace DeviceCirculationSystem.Util
         /// </summary>
         /// <param name="facility">数据库中已有的原始器件状态信息</param>
         /// <param name="user">出库器件的原操作者</param>
-        private static void OutputFacility(Facility facility, string user)
+        private static void outputFacility(Facility facility, string user)
         {
-            var rawNum = QueryDeviceNum(facility, user); //查询操作者器件数量
-            var remainNum = rawNum - facility.Num; //出库后，剩余库存数量
+            var rawNum = queryDeviceNum(facility, user); //查询操作者器件数量
+            var remainNum = rawNum - facility.num; //出库后，剩余库存数量
 
             //剩余库存数量小于0，抛出异常
             if (remainNum < 0)
@@ -259,23 +259,23 @@ namespace DeviceCirculationSystem.Util
             if (remainNum == 0)
             {
                 sqlStatusTable =
-                    $"DELETE FROM {KySet.TableStatusRepertory} WHERE 编号 = '{facility.Id}' AND 类别 = '{facility.Category}' AND 名称 = '{facility.Name}' AND 型号 = '{facility.ModelNum}' AND 规格 = '{facility.Parameter}' AND 操作者 = '{user}'";
+                    $"DELETE FROM {KySet.TableStatusRepertory} WHERE 编号 = '{facility.id}' AND 类别 = '{facility.category}' AND 名称 = '{facility.name}' AND 型号 = '{facility.modelNum}' AND 规格 = '{facility.parameter}' AND 操作者 = '{user}'";
             }
 
             //剩余库存数量大于0，更新当前器件库存数量
             else
             {
-                var priceTotalRemain = (facility.Price*remainNum).ToString(CultureInfo.CurrentCulture); //计算剩余器件总价
+                var priceTotalRemain = (facility.price*remainNum).ToString(CultureInfo.CurrentCulture); //计算剩余器件总价
                 sqlStatusTable =
-                    $"UPDATE {KySet.TableStatusRepertory} SET 数量 = '{remainNum}', 总价（元） = '{priceTotalRemain}' WHERE 编号 = '{facility.Id}' AND 类别 = '{facility.Category}' AND 名称 = '{facility.Name}' AND 型号 = '{facility.ModelNum}' AND 规格 = '{facility.Parameter}' AND 操作者 = '{user}'";
+                    $"UPDATE {KySet.TableStatusRepertory} SET 数量 = '{remainNum}', 总价（元） = '{priceTotalRemain}' WHERE 编号 = '{facility.id}' AND 类别 = '{facility.category}' AND 名称 = '{facility.name}' AND 型号 = '{facility.modelNum}' AND 规格 = '{facility.parameter}' AND 操作者 = '{user}'";
             }
-            ConnBuild();
+            connBuild();
             if (sqlStatusTable == null)
                 throw new Exception();
             Debug.WriteLine("OutputFacility:" + sqlStatusTable);
             var cmdChangeStatus = new MySqlCommand(sqlStatusTable, _connection);
             cmdChangeStatus.ExecuteNonQuery();
-            ConnClose();
+            connClose();
         }
 
         /// <summary>
@@ -283,28 +283,28 @@ namespace DeviceCirculationSystem.Util
         /// </summary>
         /// <param name="facility">数据库中已有的原始器件状态信息</param>
         /// <param name="user">入库器件的预计未来操作者</param>
-        private static void InputFacility(Facility facility, string user)
+        private static void inputFacility(Facility facility, string user)
         {
-            var rawNum = QueryDeviceNum(facility, user); //查询该操作者拥有的该器件数量
-            var remainNum = rawNum + facility.Num; //入库后，该操作者拥有的库存数量
-            var priceTotalRemain = (facility.Price*remainNum).ToString(CultureInfo.CurrentCulture); //计算该操作者拥有的该器件总价
+            var rawNum = queryDeviceNum(facility, user); //查询该操作者拥有的该器件数量
+            var remainNum = rawNum + facility.num; //入库后，该操作者拥有的库存数量
+            var priceTotalRemain = (facility.price*remainNum).ToString(CultureInfo.CurrentCulture); //计算该操作者拥有的该器件总价
             Debug.WriteLine("rawNum:" + rawNum + ";remainNum:" + remainNum);
             string sqlStatusTable = null;
             //判断当前所选器件是否为新器件
             if (rawNum > 0) //现操作者的库存中已有该器件
                 sqlStatusTable =
-                    $"UPDATE {KySet.TableStatusRepertory} SET 数量 = '{remainNum}', 单价（元） = '{facility.Price}', 总价（元） = '{priceTotalRemain}', 备注 = '{facility.Note}' WHERE 编号 = '{facility.Id}' AND 类别 = '{facility.Category}' AND 名称 = '{facility.Name}' AND 型号 = '{facility.ModelNum}' AND 规格 = '{facility.Parameter}' AND 操作者 = '{user}'";
+                    $"UPDATE {KySet.TableStatusRepertory} SET 数量 = '{remainNum}', 单价（元） = '{facility.price}', 总价（元） = '{priceTotalRemain}', 备注 = '{facility.note}' WHERE 编号 = '{facility.id}' AND 类别 = '{facility.category}' AND 名称 = '{facility.name}' AND 型号 = '{facility.modelNum}' AND 规格 = '{facility.parameter}' AND 操作者 = '{user}'";
             if (rawNum == 0) //现操作者的库存中没有该器件，是新器件
                 sqlStatusTable =
-                    $"INSERT INTO {KySet.TableStatusRepertory} values ( '{facility.Id}','{facility.Category}','{facility.Name}','{facility.ModelNum}','{facility.Parameter}','{facility.Num}','{user}','{facility.DateTime.ToString("yyyy-MM-dd HH:mm:ss")}','{facility.Price}','{priceTotalRemain}','{facility.Note}')";
+                    $"INSERT INTO {KySet.TableStatusRepertory} values ( '{facility.id}','{facility.category}','{facility.name}','{facility.modelNum}','{facility.parameter}','{facility.num}','{user}','{facility.dateTime.ToString("yyyy-MM-dd HH:mm:ss")}','{facility.price}','{priceTotalRemain}','{facility.note}')";
             if (sqlStatusTable == null)
                 throw new Exception();
             Debug.WriteLine("InputFacility:" + sqlStatusTable);
 
-            ConnBuild();
+            connBuild();
             var cmdChangeStatus = new MySqlCommand(sqlStatusTable, _connection);
             cmdChangeStatus.ExecuteNonQuery();
-            ConnClose();
+            connClose();
         }
 
         /// <summary>
@@ -313,12 +313,12 @@ namespace DeviceCirculationSystem.Util
         /// <param name="facility">所选器件信息</param>
         /// <param name="user">使用者bean</param>
         /// <returns>所选器件的数量</returns>
-        private static int QueryDeviceNum(Facility facility, string user)
+        private static int queryDeviceNum(Facility facility, string user)
         {
             var sqlExec =
-                $"SELECT 数量 FROM {KySet.TableStatusRepertory} WHERE 类别 = '{facility.Category}' AND 名称 = '{facility.Name}' AND 型号 = '{facility.ModelNum}' AND 规格 = '{facility.Parameter}' AND 操作者 = '{user}'";
+                $"SELECT 数量 FROM {KySet.TableStatusRepertory} WHERE 类别 = '{facility.category}' AND 名称 = '{facility.name}' AND 型号 = '{facility.modelNum}' AND 规格 = '{facility.parameter}' AND 操作者 = '{user}'";
             int needNum;
-            ConnBuild();
+            connBuild();
             Debug.WriteLine("QueryDeviceNum:" + sqlExec);
             var comm5 = new MySqlCommand(sqlExec, _connection);
             var reader = comm5.ExecuteReader();
@@ -326,7 +326,7 @@ namespace DeviceCirculationSystem.Util
                 needNum = int.Parse(reader["数量"].ToString());
             else
                 needNum = 0;
-            ConnClose();
+            connClose();
             return needNum;
         }
 
@@ -346,7 +346,7 @@ namespace DeviceCirculationSystem.Util
                     list.Add(read.GetString(0));
                 }
             }
-            ConnClose();
+            connClose();
             return list;
         }
 
@@ -355,7 +355,7 @@ namespace DeviceCirculationSystem.Util
             var list = new List<string>();
 
             var sqlExec = $"SELECT distinct 类别 FROM {KySet.TableStatusRepertory}";
-            ConnBuild();
+            connBuild();
             var comm = new MySqlCommand(sqlExec, _connection);
             var read = comm.ExecuteReader();
             if (read.HasRows)
@@ -365,7 +365,7 @@ namespace DeviceCirculationSystem.Util
                     list.Add(read.GetString(0));
                 }
             }
-            ConnClose();
+            connClose();
             return list;
         }
     }

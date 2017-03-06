@@ -4,9 +4,9 @@
     {
         public User(string name)
         {
-            Name = name;
+            this.name = name;
         }
 
-        public string Name { get; private set; }
+        public string name { get; private set; }
     }
 }
