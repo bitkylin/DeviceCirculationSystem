@@ -69,18 +69,18 @@ namespace DeviceCirculationSystem.view
         {
             var facilityCategory = ComboBoxQueryDevice.Text.Trim();
             var facilityUser = ComboBoxQueryUser.Text.Trim();
-            var facility = new Facility(DeviceStatus.Exist);
+            var facility = new Facility(DeviceStatus.EXIST);
             facility.Category = facilityCategory;
 
             switch (_queryStatus)
             {
-                case QueryStatus.Lab:
+                case QueryStatus.LABORARY:
                     facility.OwnUser = "实验室";
                     break;
-                case QueryStatus.Own:
+                case QueryStatus.ONESELF:
                     facility.OwnUser = _user.Name;
                     break;
-                case QueryStatus.All:
+                case QueryStatus.WHOLE:
                     facility.OwnUser = facilityUser;
                     break;
                 default:
@@ -117,11 +117,11 @@ namespace DeviceCirculationSystem.view
             {
                 SetButtonEnabled(false, false, true, false);
             }
-            else if (_queryStatus == QueryStatus.Lab)
+            else if (_queryStatus == QueryStatus.LABORARY)
             {
                 SetButtonEnabled(true, false, true, false);
             }
-            else if (_queryStatus == QueryStatus.Own)
+            else if (_queryStatus == QueryStatus.ONESELF)
             {
                 SetButtonEnabled(false, true, true, true);
             }
@@ -134,7 +134,7 @@ namespace DeviceCirculationSystem.view
         {
             try
             {
-                _facilityChangeWindow = new FacilityChangeWindow(BuildDevice(DeviceStatus.Loan), this);
+                _facilityChangeWindow = new FacilityChangeWindow(BuildDevice(DeviceStatus.LOAN), this);
                 _facilityChangeWindow.Show();
             }
             catch (NotFoundFacilityException)
@@ -151,7 +151,7 @@ namespace DeviceCirculationSystem.view
         {
             try
             {
-                _facilityChangeWindow = new FacilityChangeWindow(BuildDevice(DeviceStatus.Return), this);
+                _facilityChangeWindow = new FacilityChangeWindow(BuildDevice(DeviceStatus.RETURN), this);
                 _facilityChangeWindow.Show();
             }
             catch (NotFoundFacilityException)
@@ -168,7 +168,7 @@ namespace DeviceCirculationSystem.view
         {
             try
             {
-                _facilityChangeWindow = new FacilityChangeWindow(BuildDevice(DeviceStatus.Input), this);
+                _facilityChangeWindow = new FacilityChangeWindow(BuildDevice(DeviceStatus.INPUT), this);
                 _facilityChangeWindow.Show();
             }
             catch (NotFoundFacilityException)
@@ -185,7 +185,7 @@ namespace DeviceCirculationSystem.view
         {
             try
             {
-                _facilityChangeWindow = new FacilityChangeWindow(BuildDevice(DeviceStatus.Output), this);
+                _facilityChangeWindow = new FacilityChangeWindow(BuildDevice(DeviceStatus.OUTPUT), this);
                 _facilityChangeWindow.Show();
             }
             catch (NotFoundFacilityException)
@@ -233,11 +233,11 @@ namespace DeviceCirculationSystem.view
             SetButtonEnabled(false, false, true, false);
 
             if (RadioButtonQueryLab.IsChecked == true)
-                _queryStatus = QueryStatus.Lab;
+                _queryStatus = QueryStatus.LABORARY;
             else if (RadioButtonQueryOwn.IsChecked == true)
-                _queryStatus = QueryStatus.Own;
+                _queryStatus = QueryStatus.ONESELF;
             else if (RadioButtonQueryAll.IsChecked == true)
-                _queryStatus = QueryStatus.All;
+                _queryStatus = QueryStatus.WHOLE;
             else
                 throw new Exception("单选按钮(库存查询选择)改变事件异常");
         }
@@ -248,13 +248,13 @@ namespace DeviceCirculationSystem.view
         private void radioButtonQueryLog_Checked(object sender, RoutedEventArgs e)
         {
             if (RadioButtonQueryInputLog.IsChecked == true)
-                _queryLogStatus = DeviceStatus.Input;
+                _queryLogStatus = DeviceStatus.INPUT;
             else if (RadioButtonQueryOutputLog.IsChecked == true)
-                _queryLogStatus = DeviceStatus.Output;
+                _queryLogStatus = DeviceStatus.OUTPUT;
             else if (RadioButtonQueryReturnLog.IsChecked == true)
-                _queryLogStatus = DeviceStatus.Return;
+                _queryLogStatus = DeviceStatus.RETURN;
             else if (RadioButtonQueryLoanLog.IsChecked == true)
-                _queryLogStatus = DeviceStatus.Loan;
+                _queryLogStatus = DeviceStatus.LOAN;
             else
                 throw new Exception("单选按钮(器件历史查询选择)改变事件异常");
         }
@@ -281,21 +281,21 @@ namespace DeviceCirculationSystem.view
             }
             else
             {
-                if (status != DeviceStatus.Input)
+                if (status != DeviceStatus.INPUT)
                     throw new NotFoundFacilityException();
             }
             switch (status)
             {
-                case DeviceStatus.Return:
-                case DeviceStatus.Input:
+                case DeviceStatus.RETURN:
+                case DeviceStatus.INPUT:
                     facility.OwnUser = _user.Name;
                     facility.ToUser = "实验室";
                     break;
-                case DeviceStatus.Loan:
+                case DeviceStatus.LOAN:
                     facility.OwnUser = "实验室";
                     facility.ToUser = _user.Name;
                     break;
-                case DeviceStatus.Output:
+                case DeviceStatus.OUTPUT:
                     facility.OwnUser = _user.Name;
                     facility.ToUser = "已消耗掉";
                     break;

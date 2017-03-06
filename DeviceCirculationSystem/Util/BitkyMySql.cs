@@ -158,7 +158,7 @@ namespace DeviceCirculationSystem.Util
             //用户入库器件，记录最终器件操作者为实验室
             InputFacility(facility, facility.ToUser);
             //将此条归还记录插入入库记录表，记录者为用户
-            InsertLogTable(facility, DeviceStatus.Input, facility.OwnUser);
+            InsertLogTable(facility, DeviceStatus.INPUT, facility.OwnUser);
         }
 
         /// <summary>
@@ -170,7 +170,7 @@ namespace DeviceCirculationSystem.Util
             //从用户拥有库存中出库器件，记录者为用户
             OutputFacility(facility, facility.OwnUser);
             //将此条归还记录插入归还记录表，记录者为用户
-            InsertLogTable(facility, DeviceStatus.Output, facility.OwnUser);
+            InsertLogTable(facility, DeviceStatus.OUTPUT, facility.OwnUser);
         }
 
         /// <summary>
@@ -184,7 +184,7 @@ namespace DeviceCirculationSystem.Util
             //在用户拥有库存中入库器件，记录者为用户
             InputFacility(facility, facility.ToUser);
             //将此条归还记录插入借出记录表，记录者为用户
-            InsertLogTable(facility, DeviceStatus.Loan, facility.ToUser);
+            InsertLogTable(facility, DeviceStatus.LOAN, facility.ToUser);
         }
 
         /// <summary>
@@ -198,7 +198,7 @@ namespace DeviceCirculationSystem.Util
             //在实验室库存中入库器件，记录者为实验室
             InputFacility(facility, facility.ToUser);
             //将此条归还记录插入归还记录表，记录者为用户
-            InsertLogTable(facility, DeviceStatus.Return, facility.OwnUser);
+            InsertLogTable(facility, DeviceStatus.RETURN, facility.OwnUser);
         }
 
         /// <summary>
@@ -215,16 +215,16 @@ namespace DeviceCirculationSystem.Util
 
             switch (status)
             {
-                case DeviceStatus.Return:
+                case DeviceStatus.RETURN:
                     logTable = KySet.TableLogReturn;
                     break;
-                case DeviceStatus.Loan:
+                case DeviceStatus.LOAN:
                     logTable = KySet.TableLogLoan;
                     break;
-                case DeviceStatus.Input:
+                case DeviceStatus.INPUT:
                     logTable = KySet.TableLogInput;
                     break;
-                case DeviceStatus.Output:
+                case DeviceStatus.OUTPUT:
                     logTable = KySet.TableLogOutput;
                     break;
                 default:

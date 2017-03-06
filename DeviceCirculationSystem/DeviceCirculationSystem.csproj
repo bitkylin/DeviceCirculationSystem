@@ -102,8 +102,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="bean\enum\DeviceStatus.cs" />
-    <Compile Include="bean\enum\QueryStatus.cs" />
+    <Compile Include="bean\enum\DeviceStatusEnum.cs" />
+    <Compile Include="bean\enum\QueryStatusEnum.cs" />
     <Compile Include="bean\Facility.cs" />
     <Compile Include="bean\NotFoundFacilityException.cs" />
     <Compile Include="bean\NumBelowZeroException.cs" />

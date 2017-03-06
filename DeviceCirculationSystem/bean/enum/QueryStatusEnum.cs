@@ -2,8 +2,8 @@
 {
     public enum QueryStatus
     {
-        Lab,
-        Own,
-        All
+        LABORARY,
+        ONESELF,
+        WHOLE
     }
 }

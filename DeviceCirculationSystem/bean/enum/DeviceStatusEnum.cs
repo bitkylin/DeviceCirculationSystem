@@ -5,23 +5,26 @@
         /// <summary>
         /// 设备归还
         /// </summary>
-        Return,
+        RETURN,
 
         /// <summary>
         /// 设备借出
         /// </summary>
-        Loan,
+        LOAN,
 
         /// <summary>
         /// 设备入库
         /// </summary>
-        Input,
+        INPUT,
 
         /// <summary>
         /// 设备出库
         /// </summary>
-        Output,
+        OUTPUT,
 
-        Exist
+        /// <summary>
+        /// 默认状态，设备当前存在库中
+        /// </summary>
+        EXIST
     }
 }

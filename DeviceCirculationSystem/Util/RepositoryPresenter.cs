@@ -29,13 +29,13 @@ namespace DeviceCirculationSystem.Util
         {
             switch (facility.Status)
             {
-                case DeviceStatus.Loan:
+                case DeviceStatus.LOAN:
                     return BitkyMySql.QueryStorageLimitUser(facility.Category, facility.OwnUser, KySet.TableLogLoan);
-                case DeviceStatus.Return:
+                case DeviceStatus.RETURN:
                     return BitkyMySql.QueryStorageLimitUser(facility.Category, facility.OwnUser, KySet.TableLogReturn);
-                case DeviceStatus.Input:
+                case DeviceStatus.INPUT:
                     return BitkyMySql.QueryStorageLimitUser(facility.Category, facility.OwnUser, KySet.TableLogInput);
-                case DeviceStatus.Output:
+                case DeviceStatus.OUTPUT:
                     return BitkyMySql.QueryStorageLimitUser(facility.Category, facility.OwnUser, KySet.TableLogOutput);
             }
             throw new Exception("查询借出或归还情况表异常，设置有误");

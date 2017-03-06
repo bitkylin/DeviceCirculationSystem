@@ -29,16 +29,16 @@ namespace DeviceCirculationSystem.view
             InitWidgetStatus(facility);
             switch (_status)
             {
-                case DeviceStatus.Return:
+                case DeviceStatus.RETURN:
                     SetReturnContent();
                     break;
-                case DeviceStatus.Loan:
+                case DeviceStatus.LOAN:
                     SetLoanContent();
                     break;
-                case DeviceStatus.Input:
+                case DeviceStatus.INPUT:
                     SetInputContent();
                     break;
-                case DeviceStatus.Output:
+                case DeviceStatus.OUTPUT:
                     SetOutputContent();
                     break;
                 default:
@@ -68,9 +68,9 @@ namespace DeviceCirculationSystem.view
             TextBoxDateTime.IsEnabled = false;
             switch (_status)
             {
-                case DeviceStatus.Return:
-                case DeviceStatus.Loan:
-                case DeviceStatus.Output:
+                case DeviceStatus.RETURN:
+                case DeviceStatus.LOAN:
+                case DeviceStatus.OUTPUT:
                     TextBoxId.IsEnabled = false;
                     TextBoxModelNum.IsEnabled = false;
                     TextBoxName.IsEnabled = false;
@@ -78,7 +78,7 @@ namespace DeviceCirculationSystem.view
                     TextBoxParameter.IsEnabled = false;
                     TextBoxPrice.IsEnabled = false;
                     break;
-                case DeviceStatus.Input:
+                case DeviceStatus.INPUT:
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -131,7 +131,7 @@ namespace DeviceCirculationSystem.view
             _facility.Num = int.Parse(TextBoxNum.Text);
             _facility.Note = TextBoxNote.Text;
 
-            if (_status == DeviceStatus.Input)
+            if (_status == DeviceStatus.INPUT)
             {
                 _facility.Id = TextBoxId.Text.Trim();
                 _facility.Category = TextBoxCategory.Text.Trim();
@@ -144,19 +144,19 @@ namespace DeviceCirculationSystem.view
             {
                 switch (_status)
                 {
-                    case DeviceStatus.Return:
+                    case DeviceStatus.RETURN:
                         BitkyMySql.ReturnFacilityToRepository(_facility);
                         break;
-                    case DeviceStatus.Loan:
+                    case DeviceStatus.LOAN:
                         BitkyMySql.LoanFacilityFromRepository(_facility);
                         break;
-                    case DeviceStatus.Input:
+                    case DeviceStatus.INPUT:
                         if (MessageBox.Show("您要入库该设备(器件)吗？入库成功后将直接添加到实验室库存！", "提示", MessageBoxButton.OKCancel) ==
                             MessageBoxResult.Cancel)
                             return;
                         BitkyMySql.FacilityInputToRepository(_facility);
                         break;
-                    case DeviceStatus.Output:
+                    case DeviceStatus.OUTPUT:
                         if (MessageBox.Show("您要出库该设备(器件)吗？出库成功后该设备(器件)将从库存中移除！", "提示", MessageBoxButton.OKCancel) ==
                             MessageBoxResult.Cancel)
                             return;
@@ -167,16 +167,16 @@ namespace DeviceCirculationSystem.view
                 Close();
                 switch (_status)
                 {
-                    case DeviceStatus.Return:
+                    case DeviceStatus.RETURN:
                         MessageBox.Show("归还成功！已刷新最新的库存信息！", "提示");
                         break;
-                    case DeviceStatus.Loan:
+                    case DeviceStatus.LOAN:
                         MessageBox.Show("借出成功！已刷新最新的库存信息！", "提示");
                         break;
-                    case DeviceStatus.Input:
+                    case DeviceStatus.INPUT:
                         MessageBox.Show("入库成功！已刷新最新的库存信息！", "提示");
                         break;
-                    case DeviceStatus.Output:
+                    case DeviceStatus.OUTPUT:
                         MessageBox.Show("出库成功！已刷新最新的库存信息！", "提示");
                         break;
 
