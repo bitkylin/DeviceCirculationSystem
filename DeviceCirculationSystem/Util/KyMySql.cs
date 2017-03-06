@@ -17,7 +17,7 @@ namespace DeviceCirculationSystem.Util
         private static void connBuild()
         {
             string mysqlLogin =
-                $"server = {KySet.ServerIp}; User Id = {KySet.ServerUserName}; password = {KySet.ServerPassword}; Database = {KySet.ServerDatabase}; charset = utf8; Convert Zero Datetime = True";
+                $"server = {MySqlConsts.SERVER_IP}; User Id = {MySqlConsts.SERVER_USER_NAME}; password = {MySqlConsts.SERVER_PASSWORD}; Database = {MySqlConsts.SERVER_DATABASE}; charset = utf8; Convert Zero Datetime = True";
             _connection = new MySqlConnection(mysqlLogin);
             _connection.Open();
         }
@@ -25,7 +25,7 @@ namespace DeviceCirculationSystem.Util
         private static void ConnBuild_WorkManager()
         {
             string mysqlLogin =
-                $"server = {KySet.ServerIp}; User Id = {KySet.ServerUserName}; password = {KySet.ServerPassword}; Database = {KySet.ServerDatabaseWorkManager}; charset = utf8; Convert Zero Datetime = True";
+                $"server = {MySqlConsts.SERVER_IP}; User Id = {MySqlConsts.SERVER_USER_NAME}; password = {MySqlConsts.SERVER_PASSWORD}; Database = {MySqlConsts.SERVER_DATABASE_WORK_MANAGER}; charset = utf8; Convert Zero Datetime = True";
             _connection = new MySqlConnection(mysqlLogin);
             _connection.Open();
         }
@@ -45,7 +45,7 @@ namespace DeviceCirculationSystem.Util
         {
             var verify = false;
             var sql =
-                $"SELECT * FROM {KySet.TableUserPermission} WHERE Name = '{userName}' AND Password = '{password}'";
+                $"SELECT * FROM {MySqlConsts.TABLE_USER_PERMISSION} WHERE Name = '{userName}' AND Password = '{password}'";
             connBuild();
             var comm = new MySqlCommand(sql, _connection);
             var read = comm.ExecuteReader();
@@ -69,7 +69,7 @@ namespace DeviceCirculationSystem.Util
         {
             var verify = false;
             var sql =
-                $"SELECT * FROM {KySet.TableUserPermissionWorkManager} WHERE Name = '{userName}' AND Password = '{password}'";
+                $"SELECT * FROM {MySqlConsts.TABLE_USER_PERMISSION_WORK_MANAGER} WHERE Name = '{userName}' AND Password = '{password}'";
             ConnBuild_WorkManager();
             var comm = new MySqlCommand(sql, _connection);
             var read = comm.ExecuteReader();
@@ -84,7 +84,7 @@ namespace DeviceCirculationSystem.Util
 
         public static void changePassword(string userName, string password)
         {
-            var sql = $"update {KySet.TableUserPermission} set 密码 = '{password}' where 用户名 = '{userName}'";
+            var sql = $"update {MySqlConsts.TABLE_USER_PERMISSION} set 密码 = '{password}' where 用户名 = '{userName}'";
             connBuild();
             var cmdChangeStatus = new MySqlCommand(sql, _connection);
             cmdChangeStatus.ExecuteNonQuery();
@@ -94,7 +94,7 @@ namespace DeviceCirculationSystem.Util
         public static void ChangePassword_WorkManager(string userName, string password)
         {
             var sql =
-                $"UPDATE {KySet.TableUserPermissionWorkManager} SET Password = '{password}' WHERE Name = '{userName}'";
+                $"UPDATE {MySqlConsts.TABLE_USER_PERMISSION_WORK_MANAGER} SET Password = '{password}' WHERE Name = '{userName}'";
             ConnBuild_WorkManager();
             var cmdChangeStatus = new MySqlCommand(sql, _connection);
             cmdChangeStatus.ExecuteNonQuery();
@@ -216,16 +216,16 @@ namespace DeviceCirculationSystem.Util
             switch (status)
             {
                 case DeviceStatus.RETURN:
-                    logTable = KySet.TableLogReturn;
+                    logTable = MySqlConsts.TABLE_LOG_RETURN;
                     break;
                 case DeviceStatus.LOAN:
-                    logTable = KySet.TableLogLoan;
+                    logTable = MySqlConsts.TABLE_LOG_LOAN;
                     break;
                 case DeviceStatus.INPUT:
-                    logTable = KySet.TableLogInput;
+                    logTable = MySqlConsts.TABLE_LOG_INPUT;
                     break;
                 case DeviceStatus.OUTPUT:
-                    logTable = KySet.TableLogOutput;
+                    logTable = MySqlConsts.TABLE_LOG_OUTPUT;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(status), status, "插入借出或归还历史记录表时，状态设置异常");
@@ -259,7 +259,7 @@ namespace DeviceCirculationSystem.Util
             if (remainNum == 0)
             {
                 sqlStatusTable =
-                    $"DELETE FROM {KySet.TableStatusRepertory} WHERE 编号 = '{facility.id}' AND 类别 = '{facility.category}' AND 名称 = '{facility.name}' AND 型号 = '{facility.modelNum}' AND 规格 = '{facility.parameter}' AND 操作者 = '{user}'";
+                    $"DELETE FROM {MySqlConsts.TABLE_STATUS_REPERTORY} WHERE 编号 = '{facility.id}' AND 类别 = '{facility.category}' AND 名称 = '{facility.name}' AND 型号 = '{facility.modelNum}' AND 规格 = '{facility.parameter}' AND 操作者 = '{user}'";
             }
 
             //剩余库存数量大于0，更新当前器件库存数量
@@ -267,7 +267,7 @@ namespace DeviceCirculationSystem.Util
             {
                 var priceTotalRemain = (facility.price*remainNum).ToString(CultureInfo.CurrentCulture); //计算剩余器件总价
                 sqlStatusTable =
-                    $"UPDATE {KySet.TableStatusRepertory} SET 数量 = '{remainNum}', 总价（元） = '{priceTotalRemain}' WHERE 编号 = '{facility.id}' AND 类别 = '{facility.category}' AND 名称 = '{facility.name}' AND 型号 = '{facility.modelNum}' AND 规格 = '{facility.parameter}' AND 操作者 = '{user}'";
+                    $"UPDATE {MySqlConsts.TABLE_STATUS_REPERTORY} SET 数量 = '{remainNum}', 总价（元） = '{priceTotalRemain}' WHERE 编号 = '{facility.id}' AND 类别 = '{facility.category}' AND 名称 = '{facility.name}' AND 型号 = '{facility.modelNum}' AND 规格 = '{facility.parameter}' AND 操作者 = '{user}'";
             }
             connBuild();
             if (sqlStatusTable == null)
@@ -293,10 +293,10 @@ namespace DeviceCirculationSystem.Util
             //判断当前所选器件是否为新器件
             if (rawNum > 0) //现操作者的库存中已有该器件
                 sqlStatusTable =
-                    $"UPDATE {KySet.TableStatusRepertory} SET 数量 = '{remainNum}', 单价（元） = '{facility.price}', 总价（元） = '{priceTotalRemain}', 备注 = '{facility.note}' WHERE 编号 = '{facility.id}' AND 类别 = '{facility.category}' AND 名称 = '{facility.name}' AND 型号 = '{facility.modelNum}' AND 规格 = '{facility.parameter}' AND 操作者 = '{user}'";
+                    $"UPDATE {MySqlConsts.TABLE_STATUS_REPERTORY} SET 数量 = '{remainNum}', 单价（元） = '{facility.price}', 总价（元） = '{priceTotalRemain}', 备注 = '{facility.note}' WHERE 编号 = '{facility.id}' AND 类别 = '{facility.category}' AND 名称 = '{facility.name}' AND 型号 = '{facility.modelNum}' AND 规格 = '{facility.parameter}' AND 操作者 = '{user}'";
             if (rawNum == 0) //现操作者的库存中没有该器件，是新器件
                 sqlStatusTable =
-                    $"INSERT INTO {KySet.TableStatusRepertory} values ( '{facility.id}','{facility.category}','{facility.name}','{facility.modelNum}','{facility.parameter}','{facility.num}','{user}','{facility.dateTime.ToString("yyyy-MM-dd HH:mm:ss")}','{facility.price}','{priceTotalRemain}','{facility.note}')";
+                    $"INSERT INTO {MySqlConsts.TABLE_STATUS_REPERTORY} values ( '{facility.id}','{facility.category}','{facility.name}','{facility.modelNum}','{facility.parameter}','{facility.num}','{user}','{facility.dateTime.ToString("yyyy-MM-dd HH:mm:ss")}','{facility.price}','{priceTotalRemain}','{facility.note}')";
             if (sqlStatusTable == null)
                 throw new Exception();
             Debug.WriteLine("InputFacility:" + sqlStatusTable);
@@ -316,7 +316,7 @@ namespace DeviceCirculationSystem.Util
         private static int queryDeviceNum(Facility facility, string user)
         {
             var sqlExec =
-                $"SELECT 数量 FROM {KySet.TableStatusRepertory} WHERE 类别 = '{facility.category}' AND 名称 = '{facility.name}' AND 型号 = '{facility.modelNum}' AND 规格 = '{facility.parameter}' AND 操作者 = '{user}'";
+                $"SELECT 数量 FROM {MySqlConsts.TABLE_STATUS_REPERTORY} WHERE 类别 = '{facility.category}' AND 名称 = '{facility.name}' AND 型号 = '{facility.modelNum}' AND 规格 = '{facility.parameter}' AND 操作者 = '{user}'";
             int needNum;
             connBuild();
             Debug.WriteLine("QueryDeviceNum:" + sqlExec);
@@ -335,7 +335,7 @@ namespace DeviceCirculationSystem.Util
             var list = new List<string>();
 
             var sqlExec =
-                $"SELECT Name FROM {KySet.TableUserPermissionWorkManager} WHERE Name != '实验室' AND Name != 'admin'";
+                $"SELECT Name FROM {MySqlConsts.TABLE_USER_PERMISSION_WORK_MANAGER} WHERE Name != '实验室' AND Name != 'admin'";
             ConnBuild_WorkManager();
             var comm = new MySqlCommand(sqlExec, _connection);
             var read = comm.ExecuteReader();
@@ -354,7 +354,7 @@ namespace DeviceCirculationSystem.Util
         {
             var list = new List<string>();
 
-            var sqlExec = $"SELECT distinct 类别 FROM {KySet.TableStatusRepertory}";
+            var sqlExec = $"SELECT distinct 类别 FROM {MySqlConsts.TABLE_STATUS_REPERTORY}";
             connBuild();
             var comm = new MySqlCommand(sqlExec, _connection);
             var read = comm.ExecuteReader();

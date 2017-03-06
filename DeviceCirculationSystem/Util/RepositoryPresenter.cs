@@ -17,7 +17,7 @@ namespace DeviceCirculationSystem.Util
         /// <returns></returns>
         public static DataTable queryStorageLimitUser(Facility facility)
         {
-            return KyMySql.queryStorageLimitUser(facility.category, facility.ownUser, KySet.TableStatusRepertory);
+            return KyMySql.queryStorageLimitUser(facility.category, facility.ownUser, MySqlConsts.TABLE_STATUS_REPERTORY);
         }
 
         /// <summary>
@@ -30,13 +30,13 @@ namespace DeviceCirculationSystem.Util
             switch (facility.status)
             {
                 case DeviceStatus.LOAN:
-                    return KyMySql.queryStorageLimitUser(facility.category, facility.ownUser, KySet.TableLogLoan);
+                    return KyMySql.queryStorageLimitUser(facility.category, facility.ownUser, MySqlConsts.TABLE_LOG_LOAN);
                 case DeviceStatus.RETURN:
-                    return KyMySql.queryStorageLimitUser(facility.category, facility.ownUser, KySet.TableLogReturn);
+                    return KyMySql.queryStorageLimitUser(facility.category, facility.ownUser, MySqlConsts.TABLE_LOG_RETURN);
                 case DeviceStatus.INPUT:
-                    return KyMySql.queryStorageLimitUser(facility.category, facility.ownUser, KySet.TableLogInput);
+                    return KyMySql.queryStorageLimitUser(facility.category, facility.ownUser, MySqlConsts.TABLE_LOG_INPUT);
                 case DeviceStatus.OUTPUT:
-                    return KyMySql.queryStorageLimitUser(facility.category, facility.ownUser, KySet.TableLogOutput);
+                    return KyMySql.queryStorageLimitUser(facility.category, facility.ownUser, MySqlConsts.TABLE_LOG_OUTPUT);
             }
             throw new Exception("查询借出或归还情况表异常，设置有误");
         }

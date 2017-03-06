@@ -114,7 +114,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Util\KyMySql.cs" />
-    <Compile Include="Util\KySet.cs" />
+    <Compile Include="Util\MySqlConsts.cs" />
     <Compile Include="Util\RepositoryPresenter.cs" />
     <Compile Include="view\AboutWindow.xaml.cs">
       <DependentUpon>AboutWindow.xaml</DependentUpon>
