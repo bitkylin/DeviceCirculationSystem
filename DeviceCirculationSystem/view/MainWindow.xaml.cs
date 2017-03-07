@@ -27,23 +27,23 @@ namespace DeviceCirculationSystem.view
         {
             InitializeComponent();
             _user = user;
-            LabelUserName.Content = user.Name;
+            LabelUserName.Content = user.name;
             RadioButtonQueryLab.IsChecked = true;
             RadioButtonQueryOutputLog.IsChecked = true;
-            InitComboBox();
+            initComboBox();
         }
 
         /// <summary>
         /// 初始化ComboBox
         /// </summary>
-        private void InitComboBox()
+        private void initComboBox()
         {
-            var comboBoxDeviceList = RepositoryPresenter.GetDefaultDevices();
+            var comboBoxDeviceList = RepositoryPresenter.getDefaultDevices();
 
-            ComboBoxQueryUser.LabelText = "所有用户";
-            ComboBoxQueryDevice.LabelText = "所有类别";
-            ComboBoxQueryUserLog.LabelText = "当前用户";
-            ComboBoxQueryCategoryLog.LabelText = "所有类别";
+            ComboBoxQueryUser.labelText = "所有用户";
+            ComboBoxQueryDevice.labelText = "所有类别";
+            ComboBoxQueryUserLog.labelText = "当前用户";
+            ComboBoxQueryCategoryLog.labelText = "所有类别";
 
             comboBoxDeviceList.ForEach(str =>
             {
@@ -54,7 +54,7 @@ namespace DeviceCirculationSystem.view
             ComboBoxQueryUserLog.addItem("当前用户");
             ComboBoxQueryUser.addItem("全部");
 
-            var userNameList = RepositoryPresenter.QueryUserNameAll();
+            var userNameList = RepositoryPresenter.queryUserNameAll();
             userNameList.ForEach(str =>
             {
                 ComboBoxQueryUserLog.addItem(str);
@@ -67,21 +67,21 @@ namespace DeviceCirculationSystem.view
         /// </summary>
         private void BtnQuery_Click(object sender, RoutedEventArgs e)
         {
-            var facilityCategory = ComboBoxQueryDevice.Text.Trim();
-            var facilityUser = ComboBoxQueryUser.Text.Trim();
+            var facilityCategory = ComboBoxQueryDevice.text.Trim();
+            var facilityUser = ComboBoxQueryUser.text.Trim();
             var facility = new Facility(DeviceStatus.EXIST);
-            facility.Category = facilityCategory;
+            facility.category = facilityCategory;
 
             switch (_queryStatus)
             {
                 case QueryStatus.LABORARY:
-                    facility.OwnUser = "实验室";
+                    facility.ownUser = "实验室";
                     break;
                 case QueryStatus.ONESELF:
-                    facility.OwnUser = _user.Name;
+                    facility.ownUser = _user.name;
                     break;
                 case QueryStatus.WHOLE:
-                    facility.OwnUser = facilityUser;
+                    facility.ownUser = facilityUser;
                     break;
                 default:
                     throw new Exception("查询状态设置错误");
@@ -89,7 +89,7 @@ namespace DeviceCirculationSystem.view
 
             try
             {
-                DataGridViewQuery.ItemsSource = RepositoryPresenter.QueryStorageLimitUser(facility).DefaultView;
+                DataGridViewQuery.ItemsSource = RepositoryPresenter.queryStorageLimitUser(facility).DefaultView;
 
                 //被查询器件计数及计价
                 var psum = 0; // 定义总数为0         显示 总库存量和总价值
@@ -115,15 +115,15 @@ namespace DeviceCirculationSystem.view
             }
             if (DataGridViewQuery.Items.Count == 0)
             {
-                SetButtonEnabled(false, false, true, false);
+                setButtonEnabled(false, false, true, false);
             }
             else if (_queryStatus == QueryStatus.LABORARY)
             {
-                SetButtonEnabled(true, false, true, false);
+                setButtonEnabled(true, false, true, false);
             }
             else if (_queryStatus == QueryStatus.ONESELF)
             {
-                SetButtonEnabled(false, true, true, true);
+                setButtonEnabled(false, true, true, true);
             }
         }
 
@@ -134,14 +134,14 @@ namespace DeviceCirculationSystem.view
         {
             try
             {
-                _facilityChangeWindow = new FacilityChangeWindow(BuildDevice(DeviceStatus.LOAN), this);
+                _facilityChangeWindow = new FacilityChangeWindow(buildDevice(DeviceStatus.LOAN), this);
                 _facilityChangeWindow.Show();
             }
             catch (NotFoundFacilityException)
             {
                 MessageBox.Show("请选择表格中正确的条目!", "提示");
             }
-            SetButtonEnabled(false, false, false, false);
+            setButtonEnabled(false, false, false, false);
         }
 
         /// <summary>
@@ -151,14 +151,14 @@ namespace DeviceCirculationSystem.view
         {
             try
             {
-                _facilityChangeWindow = new FacilityChangeWindow(BuildDevice(DeviceStatus.RETURN), this);
+                _facilityChangeWindow = new FacilityChangeWindow(buildDevice(DeviceStatus.RETURN), this);
                 _facilityChangeWindow.Show();
             }
             catch (NotFoundFacilityException)
             {
                 MessageBox.Show("请选择表格中正确的条目!", "提示");
             }
-            SetButtonEnabled(false, false, false, false);
+            setButtonEnabled(false, false, false, false);
         }
 
         /// <summary>
@@ -168,14 +168,14 @@ namespace DeviceCirculationSystem.view
         {
             try
             {
-                _facilityChangeWindow = new FacilityChangeWindow(BuildDevice(DeviceStatus.INPUT), this);
+                _facilityChangeWindow = new FacilityChangeWindow(buildDevice(DeviceStatus.INPUT), this);
                 _facilityChangeWindow.Show();
             }
             catch (NotFoundFacilityException)
             {
                 MessageBox.Show("请选择表格中正确的条目!", "提示");
             }
-            SetButtonEnabled(false, false, false, false);
+            setButtonEnabled(false, false, false, false);
         }
 
         /// <summary>
@@ -185,14 +185,14 @@ namespace DeviceCirculationSystem.view
         {
             try
             {
-                _facilityChangeWindow = new FacilityChangeWindow(BuildDevice(DeviceStatus.OUTPUT), this);
+                _facilityChangeWindow = new FacilityChangeWindow(buildDevice(DeviceStatus.OUTPUT), this);
                 _facilityChangeWindow.Show();
             }
             catch (NotFoundFacilityException)
             {
                 MessageBox.Show("请选择表格中正确的条目!", "提示");
             }
-            SetButtonEnabled(false, false, false, false);
+            setButtonEnabled(false, false, false, false);
         }
 
         /// <summary>
@@ -200,23 +200,23 @@ namespace DeviceCirculationSystem.view
         /// </summary>
         private void btnQueryLog_Click(object sender, RoutedEventArgs e)
         {
-            var deviceCategory = ComboBoxQueryCategoryLog.Text.Trim();
-            var deviceUser = ComboBoxQueryUserLog.Text.Trim();
+            var deviceCategory = ComboBoxQueryCategoryLog.text.Trim();
+            var deviceUser = ComboBoxQueryUserLog.text.Trim();
             var facility = new Facility(_queryLogStatus);
 
-            facility.Category = deviceCategory;
+            facility.category = deviceCategory;
             if (deviceUser.Equals("") || deviceUser.Equals("当前用户"))
             {
-                facility.OwnUser = _user.Name;
+                facility.ownUser = _user.name;
             }
             else
             {
-                facility.OwnUser = deviceUser;
+                facility.ownUser = deviceUser;
             }
 
             try
             {
-                DataGridViewLog.ItemsSource = _presenter.QueryDeviceInputOutputLog(facility).DefaultView;
+                DataGridViewLog.ItemsSource = _presenter.queryDeviceInputOutputLog(facility).DefaultView;
             }
             catch (NotFoundFacilityException)
             {
@@ -230,7 +230,7 @@ namespace DeviceCirculationSystem.view
         /// </summary>
         private void radioButtonQuery_Checked(object sender, RoutedEventArgs e)
         {
-            SetButtonEnabled(false, false, true, false);
+            setButtonEnabled(false, false, true, false);
 
             if (RadioButtonQueryLab.IsChecked == true)
                 _queryStatus = QueryStatus.LABORARY;
@@ -259,7 +259,7 @@ namespace DeviceCirculationSystem.view
                 throw new Exception("单选按钮(器件历史查询选择)改变事件异常");
         }
 
-        private Facility BuildDevice(DeviceStatus status)
+        private Facility buildDevice(DeviceStatus status)
         {
             var facility = new Facility(status);
             var item = DataGridViewQuery.SelectedItem as DataRowView;
@@ -267,17 +267,17 @@ namespace DeviceCirculationSystem.view
 
             if (item != null)
             {
-                facility.Id = item.Row[0].ToString(); //器件编号
-                facility.Category = item.Row[1].ToString(); //器件类别
-                facility.Name = item.Row[2].ToString(); //器件名称
-                facility.ModelNum = item.Row[3].ToString(); //器件封装
-                facility.Parameter = item.Row[4].ToString(); //器件规格
-                facility.Num = int.Parse(item.Row[5].ToString()); //库存数量
-                facility.OwnUser = item.Row[6].ToString(); //当前操作者
+                facility.id = item.Row[0].ToString(); //器件编号
+                facility.category = item.Row[1].ToString(); //器件类别
+                facility.name = item.Row[2].ToString(); //器件名称
+                facility.modelNum = item.Row[3].ToString(); //器件封装
+                facility.parameter = item.Row[4].ToString(); //器件规格
+                facility.num = int.Parse(item.Row[5].ToString()); //库存数量
+                facility.ownUser = item.Row[6].ToString(); //当前操作者
 
-                facility.DateTime = DateTime.Now; //当前操作的时间戳
-                facility.Price = double.Parse(item.Row[8].ToString()); //器件单价
-                facility.Note = item.Row[10].ToString(); //备注
+                facility.dateTime = DateTime.Now; //当前操作的时间戳
+                facility.price = double.Parse(item.Row[8].ToString()); //器件单价
+                facility.note = item.Row[10].ToString(); //备注
             }
             else
             {
@@ -288,16 +288,16 @@ namespace DeviceCirculationSystem.view
             {
                 case DeviceStatus.RETURN:
                 case DeviceStatus.INPUT:
-                    facility.OwnUser = _user.Name;
-                    facility.ToUser = "实验室";
+                    facility.ownUser = _user.name;
+                    facility.toUser = "实验室";
                     break;
                 case DeviceStatus.LOAN:
-                    facility.OwnUser = "实验室";
-                    facility.ToUser = _user.Name;
+                    facility.ownUser = "实验室";
+                    facility.toUser = _user.name;
                     break;
                 case DeviceStatus.OUTPUT:
-                    facility.OwnUser = _user.Name;
-                    facility.ToUser = "已消耗掉";
+                    facility.ownUser = _user.name;
+                    facility.toUser = "已消耗掉";
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(status), status, null);
@@ -306,7 +306,7 @@ namespace DeviceCirculationSystem.view
             return facility;
         }
 
-        private void SetButtonEnabled(bool isLoan, bool isReturn, bool isInput, bool isOutput)
+        private void setButtonEnabled(bool isLoan, bool isReturn, bool isInput, bool isOutput)
         {
             BtnLoanFromStorage.IsEnabled = isLoan;
             BtnReturnToStorage.IsEnabled = isReturn;

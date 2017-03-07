@@ -22,46 +22,46 @@ namespace DeviceCirculationSystem.view
         public FacilityChangeWindow(Facility facility, IMainView view)
         {
             InitializeComponent();
-            _status = facility.Status;
+            _status = facility.status;
             _facility = facility;
             _view = view;
-            facility.DateTime = DateTime.Now;
-            InitWidgetStatus(facility);
+            facility.dateTime = DateTime.Now;
+            initWidgetStatus(facility);
             switch (_status)
             {
                 case DeviceStatus.RETURN:
-                    SetReturnContent();
+                    setReturnContent();
                     break;
                 case DeviceStatus.LOAN:
-                    SetLoanContent();
+                    setLoanContent();
                     break;
                 case DeviceStatus.INPUT:
-                    SetInputContent();
+                    setInputContent();
                     break;
                 case DeviceStatus.OUTPUT:
-                    SetOutputContent();
+                    setOutputContent();
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
         }
 
-        private void InitWidgetStatus(Facility facility)
+        private void initWidgetStatus(Facility facility)
         {
-            if (facility.Id != null)
-                TextBoxId.Text = facility.Id;
-            if (facility.ModelNum != null)
-                TextBoxModelNum.Text = facility.ModelNum;
-            if (facility.Category != null)
-                TextBoxCategory.Text = facility.Category;
-            if (facility.Name != null)
-                TextBoxName.Text = facility.Name;
-            if (facility.Parameter != null)
-                TextBoxParameter.Text = facility.Parameter;
-            if (facility.Price != null)
-                TextBoxPrice.Text = facility.Price.ToString(CultureInfo.CurrentCulture);
-            TextBoxUser.Text = facility.ToUser;
-            TextBoxDateTime.Text = facility.DateTime.ToString(CultureInfo.CurrentCulture);
+            if (facility.id != null)
+                TextBoxId.Text = facility.id;
+            if (facility.modelNum != null)
+                TextBoxModelNum.Text = facility.modelNum;
+            if (facility.category != null)
+                TextBoxCategory.Text = facility.category;
+            if (facility.name != null)
+                TextBoxName.Text = facility.name;
+            if (facility.parameter != null)
+                TextBoxParameter.Text = facility.parameter;
+            if (facility.price != null)
+                TextBoxPrice.Text = facility.price.ToString(CultureInfo.CurrentCulture);
+            TextBoxUser.Text = facility.toUser;
+            TextBoxDateTime.Text = facility.dateTime.ToString(CultureInfo.CurrentCulture);
 
             TextBoxId.IsEnabled = false;
             TextBoxUser.IsEnabled = false;
@@ -85,25 +85,25 @@ namespace DeviceCirculationSystem.view
             }
         }
 
-        private void SetLoanContent()
+        private void setLoanContent()
         {
             LabelOptContent.Content = "设备借出";
             BtnConfirm.Content = "借出确认";
         }
 
-        private void SetInputContent()
+        private void setInputContent()
         {
             LabelOptContent.Content = "设备入库";
             BtnConfirm.Content = "入库确认";
         }
 
-        private void SetOutputContent()
+        private void setOutputContent()
         {
             LabelOptContent.Content = "设备出库";
             BtnConfirm.Content = "出库确认";
         }
 
-        private void SetReturnContent()
+        private void setReturnContent()
         {
             LabelOptContent.Content = "设备归还";
             BtnConfirm.Content = "归还确认";
@@ -112,7 +112,7 @@ namespace DeviceCirculationSystem.view
         private void btnConfirm_Click(object sender, RoutedEventArgs e)
         {
             //判断“单价”和“数量”输入的合法性
-            if (!(IsInt(TextBoxNum.Text) && (int.Parse(TextBoxNum.Text.Trim()) > 0)))
+            if (!(isInt(TextBoxNum.Text) && (int.Parse(TextBoxNum.Text.Trim()) > 0)))
             {
                 MessageBox.Show("输入的数量有误，请检查并重新输入！", "提示");
                 return;
@@ -122,45 +122,45 @@ namespace DeviceCirculationSystem.view
                 MessageBox.Show("备注框中的文本量需小于50个字符！", "提示");
                 return;
             }
-            if (!(IsNumeric(TextBoxPrice.Text) && (double.Parse(TextBoxPrice.Text.Trim()) > 0)))
+            if (!(isNumeric(TextBoxPrice.Text) && (double.Parse(TextBoxPrice.Text.Trim()) > 0)))
             {
                 MessageBox.Show("输入的价格有误，请检查并重新输入！", "提示");
                 return;
             }
 
-            _facility.Num = int.Parse(TextBoxNum.Text);
-            _facility.Note = TextBoxNote.Text;
+            _facility.num = int.Parse(TextBoxNum.Text);
+            _facility.note = TextBoxNote.Text;
 
             if (_status == DeviceStatus.INPUT)
             {
-                _facility.Id = TextBoxId.Text.Trim();
-                _facility.Category = TextBoxCategory.Text.Trim();
-                _facility.Name = TextBoxName.Text.Trim();
-                _facility.ModelNum = TextBoxModelNum.Text.Trim();
-                _facility.Price = double.Parse(TextBoxPrice.Text.Trim());
-                _facility.Parameter = TextBoxParameter.Text.Trim();
+                _facility.id = TextBoxId.Text.Trim();
+                _facility.category = TextBoxCategory.Text.Trim();
+                _facility.name = TextBoxName.Text.Trim();
+                _facility.modelNum = TextBoxModelNum.Text.Trim();
+                _facility.price = double.Parse(TextBoxPrice.Text.Trim());
+                _facility.parameter = TextBoxParameter.Text.Trim();
             }
             try
             {
                 switch (_status)
                 {
                     case DeviceStatus.RETURN:
-                        BitkyMySql.ReturnFacilityToRepository(_facility);
+                        KyMySql.returnFacilityToRepository(_facility);
                         break;
                     case DeviceStatus.LOAN:
-                        BitkyMySql.LoanFacilityFromRepository(_facility);
+                        KyMySql.loanFacilityFromRepository(_facility);
                         break;
                     case DeviceStatus.INPUT:
                         if (MessageBox.Show("您要入库该设备(器件)吗？入库成功后将直接添加到实验室库存！", "提示", MessageBoxButton.OKCancel) ==
                             MessageBoxResult.Cancel)
                             return;
-                        BitkyMySql.FacilityInputToRepository(_facility);
+                        KyMySql.facilityInputToRepository(_facility);
                         break;
                     case DeviceStatus.OUTPUT:
                         if (MessageBox.Show("您要出库该设备(器件)吗？出库成功后该设备(器件)将从库存中移除！", "提示", MessageBoxButton.OKCancel) ==
                             MessageBoxResult.Cancel)
                             return;
-                        BitkyMySql.FacilityOutputFromRepository(_facility);
+                        KyMySql.facilityOutputFromRepository(_facility);
                         break;
                 }
 
@@ -201,7 +201,7 @@ namespace DeviceCirculationSystem.view
         /// </summary>
         /// <param name="value">待匹配的文本</param>
         /// <returns>匹配结果</returns>
-        public static bool IsNumeric(string value)
+        public static bool isNumeric(string value)
         {
             value = value.Trim();
             return Regex.IsMatch(value, @"^[1-9]\d*\.\d*$|^0\.\d*[1-9]\d*$|^[1-9]\d*$|^0$");
@@ -212,7 +212,7 @@ namespace DeviceCirculationSystem.view
         /// </summary>
         /// <param name="value">待匹配的文本</param>
         /// <returns>匹配结果</returns>
-        public static bool IsInt(string value) //判断是正整数
+        public static bool isInt(string value) //判断是正整数
         {
             value = value.Trim();
             return Regex.IsMatch(value, @"^[1-9]\d*$");

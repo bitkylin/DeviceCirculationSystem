@@ -7,67 +7,67 @@ namespace DeviceCirculationSystem.bean
     {
         public Facility(DeviceStatus status)
         {
-            Status = status;
+            this.status = status;
         }
 
         /// <summary>
         ///     编号
         /// </summary>
-        public string Id { set; get; }
+        public string id { set; get; }
 
         /// <summary>
         ///     类别
         /// </summary>
-        public string Category { set; get; }
+        public string category { set; get; }
 
         /// <summary>
         ///     名称
         /// </summary>
-        public string Name { set; get; }
+        public string name { set; get; }
 
         /// <summary>
         ///     型号
         /// </summary>
-        public string ModelNum { set; get; }
+        public string modelNum { set; get; }
 
         /// <summary>
         ///     规格
         /// </summary>
-        public string Parameter { set; get; }
+        public string parameter { set; get; }
 
         /// <summary>
         ///     数量
         /// </summary>
-        public int Num { set; get; }
+        public int num { set; get; }
 
         /// <summary>
         ///     当前操作者
         /// </summary>
-        public string OwnUser { set; get; }
+        public string ownUser { set; get; }
 
         /// <summary>
         ///     目标(未来)操作者
         /// </summary>
-        public string ToUser { set; get; }
+        public string toUser { set; get; }
 
         /// <summary>
         ///     日期时间
         /// </summary>
-        public DateTime DateTime { set; get; }
+        public DateTime dateTime { set; get; }
 
         /// <summary>
         ///     价格
         /// </summary>
-        public double Price { set; get; }
+        public double price { set; get; }
 
         /// <summary>
         ///     备注
         /// </summary>
-        public string Note { set; get; }
+        public string note { set; get; }
 
         /// <summary>
         ///     设备状态
         /// </summary>
-        public DeviceStatus Status { private set; get; }
+        public DeviceStatus status { private set; get; }
     }
 }

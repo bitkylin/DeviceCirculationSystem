@@ -22,13 +22,13 @@ namespace DeviceCirculationSystem.view
     {
         private string _hintLalelShow = "label";
 
-        public string Text
+        public string text
         {
             get { return comboBox.Text; }
             set { comboBox.Text = value; }
         }
 
-        public string LabelText
+        public string labelText
         {
             get { return label.Content.ToString(); }
             set
