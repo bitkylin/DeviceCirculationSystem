@@ -210,7 +210,7 @@ namespace DeviceCirculationSystem.Util
         private static void insertLogTable(Facility facility, DeviceStatus status, string user)
         {
             //计算出库器件总价
-            var priceTotal = (facility.price*facility.num).ToString(CultureInfo.CurrentCulture);
+            var priceTotal = (facility.price * facility.num).ToString(CultureInfo.CurrentCulture);
             string logTable;
 
             switch (status)
@@ -265,7 +265,7 @@ namespace DeviceCirculationSystem.Util
             //剩余库存数量大于0，更新当前器件库存数量
             else
             {
-                var priceTotalRemain = (facility.price*remainNum).ToString(CultureInfo.CurrentCulture); //计算剩余器件总价
+                var priceTotalRemain = (facility.price * remainNum).ToString(CultureInfo.CurrentCulture); //计算剩余器件总价
                 sqlStatusTable =
                     $"UPDATE {MySqlConsts.TABLE_STATUS_REPERTORY} SET 数量 = '{remainNum}', 总价（元） = '{priceTotalRemain}' WHERE 编号 = '{facility.id}' AND 类别 = '{facility.category}' AND 名称 = '{facility.name}' AND 型号 = '{facility.modelNum}' AND 规格 = '{facility.parameter}' AND 操作者 = '{user}'";
             }
@@ -287,7 +287,7 @@ namespace DeviceCirculationSystem.Util
         {
             var rawNum = queryDeviceNum(facility, user); //查询该操作者拥有的该器件数量
             var remainNum = rawNum + facility.num; //入库后，该操作者拥有的库存数量
-            var priceTotalRemain = (facility.price*remainNum).ToString(CultureInfo.CurrentCulture); //计算该操作者拥有的该器件总价
+            var priceTotalRemain = (facility.price * remainNum).ToString(CultureInfo.CurrentCulture); //计算该操作者拥有的该器件总价
             Debug.WriteLine("rawNum:" + rawNum + ";remainNum:" + remainNum);
             string sqlStatusTable = null;
             //判断当前所选器件是否为新器件
