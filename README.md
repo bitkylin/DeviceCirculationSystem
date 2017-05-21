@@ -1,5 +1,9 @@
 # 设备自助借还软件
 
+![技术](https://img.shields.io/badge/技术-WPF|MySQL-red.svg)
+[![GitHub wiki](https://img.shields.io/badge/publish-Wiki-brightgreen.svg)](https://github.com/bitkylin/DeviceCirculationSystem/wiki)
+[![许可证](https://img.shields.io/badge/许可证-MIT-blue.svg)](https://github.com/bitkylin/DeviceCirculationSystem/blob/master/LICENSE)
+
 实验室设备较多，人员较多，对设备进行有效的管理是一个难题，因此开发了实验室设备自助借还软件。
 
 ## 软件功能
