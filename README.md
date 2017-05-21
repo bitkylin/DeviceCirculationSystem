@@ -32,6 +32,19 @@
 
 该项目的详细信息请参见项目的 Wiki
 
+### 1. [项目介绍](https://github.com/bitkylin/DeviceCirculationSystem/wiki)
+
+### 2. [软件基本概念](https://github.com/bitkylin/DeviceCirculationSystem/wiki/软件基本概念)
+
+### 3. [拥有设备状态查询](https://github.com/bitkylin/DeviceCirculationSystem/wiki/拥有设备状态查询)
+
+### 4. [设备借出归还](https://github.com/bitkylin/DeviceCirculationSystem/wiki/设备借出归还)
+
+### 5. [设备出库入库](https://github.com/bitkylin/DeviceCirculationSystem/wiki/设备出库入库)
+
+### 6. [流转记录查询及密码修改](https://github.com/bitkylin/DeviceCirculationSystem/wiki/流转记录查询及密码修改)
+
+
 ## 项目展示
 
 ### [软件登录](https://github.com/bitkylin/DeviceCirculationSystem/wiki)
